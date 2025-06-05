@@ -46,7 +46,7 @@ function parseCSV(text) {
     return dataLines.map((line, idx) => {
         const values = line
             .split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/)
-            .map((v) => v.replace(/^\"|\"$/g, "").replace(/\"\"/g, "\""));
+            .map((v) => v.trim().replace(/^\"|\"$/g, "").replace(/\"\"/g, "\""));
         if (values.length !== headers.length) {
             throw new Error(`Row ${idx + 1} has ${values.length} columns, expected ${headers.length}`);
         }
