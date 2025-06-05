@@ -1,0 +1,12 @@
+.text-logo {
+  color: #0097d5;
+}
+.bg-logo {
+  background-color: #0097d5;
+}
+.border-logo {
+  border-color: #0097d5;
+}
+.focus\:ring-logo:focus {
+  outline-color: #0097d5;
+}
