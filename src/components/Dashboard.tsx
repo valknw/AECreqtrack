@@ -32,13 +32,13 @@ export function Dashboard({ requirements, coveragePercent, isReady }: Props) {
             <ResponsiveContainer>
               <PieChart>
                 <Pie
-                  data={requirements.map((r) => ({ name: r.status, value: 1 }))}
+                  data={pieData}
                   innerRadius={60}
                   outerRadius={80}
                   dataKey="value"
                   nameKey="name"
                 >
-                  {requirements.map((_, index) => (
+                  {pieData.map((_, index) => (
                     <Cell key={index} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
