@@ -21,6 +21,7 @@ import { Plus, Save, Search, Upload, Download } from "lucide-react";
 import { Requirement, STATUSES, Status } from "./src/types";
 import { SAMPLE_REQUIREMENTS } from "./src/sampleData";
 import { useRequirements } from "./src/hooks/useRequirements";
+import { useProjects } from "./src/hooks/useProjects";
 import { RequirementList } from "./src/components/RequirementList";
 import { SpecTree } from "./src/components/SpecTree";
 import { TraceMatrix } from "./src/components/TraceMatrix";
@@ -28,8 +29,12 @@ import { Dashboard } from "./src/components/Dashboard";
 import "./src/styles.css";
 
 const LOGO_BLUE = "#0097D5";
+const DEFAULT_PROJECT = "Default";
 
 export default function App() {
+  const { projects, currentProject, createProject, switchProject } = useProjects([
+    DEFAULT_PROJECT,
+  ]);
   const {
     requirements,
     createRequirement,
@@ -37,7 +42,7 @@ export default function App() {
     deleteRequirement,
     exportCSVFile,
     importCSVFile,
-  } = useRequirements(SAMPLE_REQUIREMENTS);
+  } = useRequirements(SAMPLE_REQUIREMENTS, currentProject);
 
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState<string | undefined>();
@@ -79,6 +84,31 @@ export default function App() {
           <h1 className="text-3xl font-semibold tracking-tight text-logo">
             Requirement Tracker
           </h1>
+          <div className="flex items-center gap-4">
+            <Select value={currentProject} onValueChange={switchProject}>
+              <SelectTrigger className="w-40 border-logo">
+                <SelectValue placeholder="Select project" className="text-logo" />
+              </SelectTrigger>
+              <SelectContent>
+                {projects.map((p) => (
+                  <SelectItem key={p} value={p} className="text-logo">
+                    {p}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-logo text-logo"
+              onClick={() => {
+                const name = prompt("Project name?");
+                if (name) createProject(name);
+              }}
+            >
+              New Project
+            </Button>
+          </div>
           <div className="space-x-2">
             {(["list", "tree", "matrix", "dashboard"] as const).map((v) => (
               <Button
