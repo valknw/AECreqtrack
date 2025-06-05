@@ -2,15 +2,17 @@ import { useCallback, useEffect, useState } from "react";
 import { Requirement, Status } from "../types";
 import { parseCSV, requirementsToCSV } from "../utils/csv";
 
-const STORAGE_KEY = "requirements";
+const KEY_PREFIX = "requirements_";
 
 type NewReq = Omit<Requirement, "req_id" | "status" | "comment">;
 
-export function useRequirements(initial: Requirement[]) {
+export function useRequirements(initial: Requirement[], project: string) {
+  const storageKey = `${KEY_PREFIX}${project}`;
+
   const [requirements, setRequirements] = useState<Requirement[]>(() => {
     if (typeof window === "undefined") return initial;
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
+      const stored = localStorage.getItem(storageKey);
       if (stored) {
         return JSON.parse(stored) as Requirement[];
       }
@@ -20,11 +22,26 @@ export function useRequirements(initial: Requirement[]) {
     return initial;
   });
 
+  // reload when project changes
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      const stored = localStorage.getItem(storageKey);
+      if (stored) {
+        setRequirements(JSON.parse(stored) as Requirement[]);
+      } else {
+        setRequirements(initial);
+      }
+    } catch {
+      setRequirements(initial);
+    }
+  }, [storageKey]);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(requirements));
+      localStorage.setItem(storageKey, JSON.stringify(requirements));
     }
-  }, [requirements]);
+  }, [requirements, storageKey]);
 
   const createRequirement = useCallback(
     (data: NewReq) => {
