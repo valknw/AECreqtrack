@@ -26,9 +26,13 @@ interface DialogProps {
 export function Dialog({ open, onOpenChange, children, ...props }: DialogProps) {
   return (
     <DialogContext.Provider value={{ open, setOpen: onOpenChange || (() => {}) }}>
-      <div {...props} style={{ display: open ? "block" : "none" }}>
-        {children}
-      </div>
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md" {...props}>
+            {children}
+          </div>
+        </div>
+      )}
     </DialogContext.Provider>
   );
 }
