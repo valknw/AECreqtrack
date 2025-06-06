@@ -6,6 +6,8 @@ declare module 'react' {
   export function useCallback(fn: (...args: any[]) => any, deps: any[]): any;
   export function createContext<T>(defaultValue: T): any;
   export function useContext<T>(ctx: any): T;
+  export function cloneElement(element: any, props?: any, ...children: any[]): any;
+  export function isValidElement(element: any): boolean;
   export const Fragment: any;
   export const StrictMode: any;
   export interface ReactNode {}
