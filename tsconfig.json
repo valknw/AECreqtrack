@@ -6,7 +6,7 @@
     "rootDir": ".",
     "outDir": "dist",
     "strict": true,
-    "jsx": "react"
+    "jsx": "react-jsx"
   },
-  "include": ["src/utils/**/*.ts", "src/types.ts"]
+  "include": ["src/**/*", "App.tsx"]
 }
