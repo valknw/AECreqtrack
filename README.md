@@ -67,8 +67,13 @@ inside a fresh Vite project.
    cd aecreqtrack
    npm install
    ```
-8. **Copy `App.tsx` and the `src/` directory** from this repository into
-   `aecreqtrack/src/` (replace the generated files).
+8. **Copy `App.tsx` and the contents of the `src/` directory** from this
+   repository into `aecreqtrack/src/` but keep the `src/main.tsx` file Vite
+   created. Run these commands from inside `aecreqtrack`:
+   ```bash
+   cp -r ../src/* ./src/
+   cp ../App.tsx ./src/
+   ```
 9. **Start the development server**:
    ```bash
    npm run dev
