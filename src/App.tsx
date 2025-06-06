@@ -394,14 +394,7 @@ export default function App() {
 
         {view === "dashboard" && (
           <Dashboard requirements={requirements} statuses={statuses} />
-        )}
 
-        {view === "verification" && (
-          <VerificationTab
-            requirements={requirements}
-            onUpdate={updateRequirement}
-            logoColor={LOGO_BLUE}
-          />
         )}
       </div>
 
