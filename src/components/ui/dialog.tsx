@@ -1,29 +1,84 @@
-import { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  cloneElement,
+  isValidElement,
+} from "react";
 
-export function Dialog({ children }: { children: ReactNode }) {
-  return <div>{children}</div>;
+interface DialogContextValue {
+  open: boolean;
+  setOpen: (o: boolean) => void;
 }
 
-export function DialogTrigger(props: ButtonHTMLAttributes<HTMLButtonElement>) {
-  return <button {...props} />;
+const DialogContext = createContext<DialogContextValue>({
+  open: false,
+  setOpen: () => {},
+});
+
+interface DialogProps {
+  open: boolean;
+  onOpenChange?: (open: boolean) => void;
+  children: ReactNode;
+  [key: string]: any;
 }
 
-export function DialogContent({ children }: { children: ReactNode }) {
-  return <div>{children}</div>;
+export function Dialog({ open, onOpenChange, children, ...props }: DialogProps) {
+  return (
+    <DialogContext.Provider value={{ open, setOpen: onOpenChange || (() => {}) }}>
+      <div {...props} style={{ display: open ? "block" : "none" }}>
+        {children}
+      </div>
+    </DialogContext.Provider>
+  );
 }
 
-export function DialogHeader({ children }: { children: ReactNode }) {
-  return <div>{children}</div>;
+interface DialogTriggerProps {
+  asChild?: boolean;
+  children: ReactNode;
+  [key: string]: any;
 }
 
-export function DialogFooter({ children }: { children: ReactNode }) {
-  return <div>{children}</div>;
+export function DialogTrigger({ asChild, children, ...props }: DialogTriggerProps) {
+  const { setOpen } = useContext<DialogContextValue>(DialogContext as any);
+  const handleClick = (e: any) => {
+    if (props.onClick) props.onClick(e);
+    setOpen(true);
+  };
+  if (asChild && isValidElement(children)) {
+    return cloneElement(children as any, {
+      ...props,
+      onClick: handleClick,
+    });
+  }
+  return (
+    <button {...props} onClick={handleClick}>
+      {children}
+    </button>
+  );
 }
 
-export function DialogTitle({ children }: { children: ReactNode }) {
-  return <h3>{children}</h3>;
+interface DialogContentProps {
+  children: ReactNode;
+  [key: string]: any;
 }
 
-export function DialogDescription({ children }: { children: ReactNode }) {
-  return <p>{children}</p>;
+export function DialogContent({ children, ...props }: DialogContentProps) {
+  return <div {...props}>{children}</div>;
+}
+
+export function DialogHeader({ children, ...props }: any) {
+  return <div {...props}>{children}</div>;
+}
+
+export function DialogFooter({ children, ...props }: any) {
+  return <div {...props}>{children}</div>;
+}
+
+export function DialogTitle({ children, ...props }: any) {
+  return <h3 {...props}>{children}</h3>;
+}
+
+export function DialogDescription({ children, ...props }: any) {
+  return <p {...props}>{children}</p>;
 }
