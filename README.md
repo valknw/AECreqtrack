@@ -71,6 +71,11 @@ inside a fresh Vite project.
 8. **Copy `App.tsx` and the `src/` directory** from the repository root into
    `demo/src/`, replacing the files created by Vite.
 
+   The imports in `App.tsx` assume it resides one level above the `src`
+   directory. After copying the file into `demo/src`, update the paths by
+   removing the leading `src/` from each import statement (for example,
+   change `"./src/components/ui/button"` to `"./components/ui/button"`).
+
 9. **Start the development server**:
    ```bash
    npm run dev
