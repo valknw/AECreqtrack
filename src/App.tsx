@@ -46,7 +46,7 @@ export default function App() {
   } = useRequirements(SAMPLE_REQUIREMENTS, currentProject);
 
   const [search, setSearch] = useState("");
-  const [filterStatus, setFilterStatus] = useState<string | undefined>();
+  const [filterStatus, setFilterStatus] = useState<string | undefined>(undefined);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newReq, setNewReq] = useState({ title: "", description: "", spec_section: "" });
   const [view, setView] = useState<"list" | "tree" | "matrix" | "dashboard">("list");
@@ -146,7 +146,12 @@ export default function App() {
                   <span className="text-logo">Title *</span>
                   <Input
                     value={newReq.title}
-                    onChange={(e) => setNewReq((p) => ({ ...p, title: e.target.value }))}
+                    onChange={(e) =>
+                      setNewReq({
+                        ...newReq,
+                        title: e.target.value,
+                      })
+                    }
                     className="border-logo focus:ring-logo"
                   />
                 </label>
@@ -154,7 +159,12 @@ export default function App() {
                   <span className="text-logo">Description *</span>
                   <Input
                     value={newReq.description}
-                    onChange={(e) => setNewReq((p) => ({ ...p, description: e.target.value }))}
+                    onChange={(e) =>
+                      setNewReq({
+                        ...newReq,
+                        description: e.target.value,
+                      })
+                    }
                     className="border-logo focus:ring-logo"
                   />
                 </label>
@@ -162,7 +172,12 @@ export default function App() {
                   <span className="text-logo">Specification Section</span>
                   <Input
                     value={newReq.spec_section}
-                    onChange={(e) => setNewReq((p) => ({ ...p, spec_section: e.target.value }))}
+                    onChange={(e) =>
+                      setNewReq({
+                        ...newReq,
+                        spec_section: e.target.value,
+                      })
+                    }
                     className="border-logo focus:ring-logo"
                   />
                 </label>

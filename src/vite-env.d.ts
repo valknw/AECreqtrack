@@ -1,1 +1,2 @@
-/// <reference types="vite/client" />
+// Minimal Vite types stub for tests
+export {};
