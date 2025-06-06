@@ -110,6 +110,31 @@ function useRequirements(initial, project) {
             reader.readAsText(file);
         });
     }, [requirements]);
+    const exportStatusPDF = (0, react_1.useCallback)(async () => {
+        if (typeof window === "undefined")
+            return;
+        const win = window;
+        if (!win.jspdf) {
+            await new Promise((resolve, reject) => {
+                const script = document.createElement("script");
+                script.src =
+                    "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js";
+                script.onload = () => resolve();
+                script.onerror = () => reject(new Error("Failed to load jsPDF"));
+                document.body.appendChild(script);
+            });
+        }
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(16);
+        doc.text("Requirement Status Summary", 10, 10);
+        let y = 20;
+        requirements.forEach((r) => {
+            doc.text(`${r.req_id} - ${r.status} - ${r.comment}`, 10, y);
+            y += 8;
+        });
+        doc.save("status-summary.pdf");
+    }, [requirements]);
     return {
         requirements,
         addRequirement: createRequirement,
@@ -117,6 +142,7 @@ function useRequirements(initial, project) {
         updateRequirement,
         deleteRequirement,
         exportCSVFile,
+        exportStatusPDF,
         importCSVFile,
     };
 }
