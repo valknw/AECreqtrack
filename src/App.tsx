@@ -31,6 +31,7 @@ import { SpecTree } from "./components/SpecTree";
 import { TraceMatrix } from "./components/TraceMatrix";
 import { Dashboard } from "./components/Dashboard";
 import { VerificationTab } from "./components/VerificationTab";
+import { Sidebar, View } from "./components/Sidebar";
 import "./styles.css";
 
 const LOGO_BLUE = "#0097D5";
@@ -61,13 +62,7 @@ export default function App() {
   const [filterStatuses, setFilterStatuses] = useState<string[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newReq, setNewReq] = useState({ title: "", description: "", spec_section: "" });
-  const [view, setView] = useState<
-    | "list"
-    | "tree"
-    | "matrix"
-    | "dashboard"
-    | "verification"
-  >("list");
+  const [view, setView] = useState<View>("list");
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
@@ -113,9 +108,17 @@ export default function App() {
   const selectValue = filterStatuses.length === 0 ? [ALL_VALUE] : filterStatuses;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8 fade-in">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6">
-        <header className="flex items-center justify-between">
+    <div className="min-h-screen bg-gray-50 flex">
+      <Sidebar
+        view={view}
+        setView={(v) => {
+          setView(v);
+          if (v !== "tree") setSelectedSection(null);
+        }}
+      />
+      <div className="flex-1 p-8 fade-in">
+        <div className="mx-auto flex max-w-7xl flex-col gap-6">
+          <header className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img src="/logo.svg" alt="Requirement Tracker logo" className="h-8 w-8" />
             <h1 className="text-3xl font-semibold tracking-tight text-logo">
@@ -168,22 +171,6 @@ export default function App() {
             </Button>
           </div>
           <div className="space-x-2 flex items-center">
-            {(
-              ["list", "tree", "matrix", "dashboard", "verification"] as const
-            ).map((v) => (
-              <Button
-                key={v}
-                variant={view === v ? "default" : "outline"}
-                onClick={() => {
-                  setView(v);
-                  if (v !== "tree") setSelectedSection(null);
-                }}
-                size="sm"
-                className={view === v ? "bg-logo text-white" : ""}
-              >
-                {v.charAt(0).toUpperCase() + v.slice(1)}
-              </Button>
-            ))}
             <Button
               size="sm"
               variant="outline"
@@ -547,6 +534,7 @@ export default function App() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      </div>
     </div>
   );
 }
