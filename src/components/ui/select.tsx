@@ -4,6 +4,7 @@ interface SelectProps {
   value?: string;
   onValueChange?: (value: string) => void;
   children: ReactNode;
+  className?: string;
   [key: string]: any;
 }
 
@@ -13,6 +14,10 @@ export function Select({ value, onValueChange, children, ...props }: SelectProps
       {...props}
       value={value}
       onChange={(e) => onValueChange?.(e.target.value)}
+      className={
+        "border border-gray-300 rounded-md px-2 py-1 transition-colors focus:border-logo focus:ring-logo " +
+        (props.className || "")
+      }
     >
       {children}
     </select>
