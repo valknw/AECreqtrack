@@ -70,7 +70,7 @@ inside a fresh Vite project.
    ```
 
 8. **Return to the repository root and run the setup script** to copy the
-   application files and install the additional dependencies:
+   application files, install the extra dependencies and configure Tailwind CSS:
 
 
    ```bash
