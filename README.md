@@ -28,32 +28,11 @@ AECreqtrack is a lightweight requirements tracker implemented with **React** and
    node tests/csv.test.js
    ```
 
-## Using the React components
-
-AECreqtrack does not include a bundler configuration. To run the interface, place `App.tsx` and the entire `src/` directory inside an existing React project or create a new one. The example below uses [Vite](https://vitejs.dev/):
-
-```bash
-npm create vite@latest my-app -- --template react-ts
-cd my-app
-npm install
-# Copy `App.tsx` and the `src/` directory from this repository into the Vite project's `src/`
-npm run dev
-```
-
-Open the local development URL displayed by Vite (typically `http://localhost:5173`) and you will be able to:
-
-1. Create a project or work with the default project stored in local storage.
-2. Add new requirements using the **Add Requirement** dialog.
-3. Filter requirements by typing in the search box or choosing a status from the drop down.
-4. Switch between **List**, **Tree**, **Matrix** and **Dashboard** views using the buttons in the header.
-5. Import or export a CSV file with the **Import CSV** and **Export CSV** buttons.
-
-All data is persisted in the browser, so refreshing the page keeps your progress for each project.
-
 ## Getting started in Visual Studio Code
 
-The following guide walks you through opening the project in VS Code and running
-the example interface from scratch.
+AECreqtrack ships with reusable React components but no bundler
+configuration. The steps below show how to open the repository and run the demo
+inside a fresh Vite project.
 
 1. **Install prerequisites**
    - [Node.js](https://nodejs.org/) 18 or newer
@@ -70,6 +49,10 @@ the example interface from scratch.
    ```bash
    npm install
    ```
+   If npm reports a peer dependency conflict, retry with:
+   ```bash
+   npm install --legacy-peer-deps
+   ```
 5. **Compile the TypeScript sources**:
    ```bash
    npx tsc
@@ -78,20 +61,31 @@ the example interface from scratch.
    ```bash
    node tests/csv.test.js
    ```
-7. **Create a React project** where AECreqtrack will run. From the terminal:
+7. **Create a React project** named `aecreqtrack` where the app will run. From the terminal:
    ```bash
-   npm create vite@latest my-app -- --template react-ts
-   cd my-app
+   npm create vite@latest aecreqtrack -- --template react-ts
+   cd aecreqtrack
    npm install
    ```
 8. **Copy `App.tsx` and the `src/` directory** from this repository into
-   `my-app/src/` (replace the generated files).
+   `aecreqtrack/src/` (replace the generated files).
 9. **Start the development server**:
    ```bash
    npm run dev
    ```
 10. Open the URL printed in the terminal (typically
     `http://localhost:5173`) in your browser to use AECreqtrack.
+
+Once running, you can:
+
+1. Create a project or work with the default project stored in local storage.
+2. Add new requirements using the **Add Requirement** dialog.
+3. Filter requirements by typing in the search box or choosing a status from the drop down.
+4. Switch between **List**, **Tree**, **Matrix** and **Dashboard** views using the buttons in the header.
+5. Import or export a CSV file with the **Import CSV** and **Export CSV** buttons.
+
+All data is persisted in the browser, so refreshing the page keeps your progress for each project.
+
 
 All of these commands can be executed from the integrated terminal inside Visual
 Studio Code, making it easy for beginners to experiment with the project.
