@@ -1,19 +1,28 @@
 import { ReactNode } from "react";
 
 interface SelectProps {
-  value?: string;
-  onValueChange?: (value: string) => void;
+  value?: string | string[];
+  onValueChange?: (value: string | string[]) => void;
   children: ReactNode;
   className?: string;
   [key: string]: any;
 }
 
-export function Select({ value, onValueChange, children, ...props }: SelectProps) {
+export function Select({ value, onValueChange, children, multiple, ...props }: SelectProps) {
   return (
     <select
       {...props}
       value={value}
-      onChange={(e) => onValueChange?.(e.target.value)}
+      multiple={multiple}
+      onChange={(e) => {
+        const target = e.target as HTMLSelectElement;
+        if (multiple) {
+          const vals = Array.from(target.selectedOptions).map((o) => o.value);
+          onValueChange?.(vals);
+        } else {
+          onValueChange?.(target.value);
+        }
+      }}
       className={
         "border border-gray-300 rounded-md px-2 py-1 transition-colors focus:border-logo focus:ring-logo " +
         (props.className || "")
