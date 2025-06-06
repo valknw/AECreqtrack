@@ -41,6 +41,7 @@ execSync('npm install lucide-react recharts', { cwd: demoDir, stdio: 'inherit' }
 execSync('npm install -D tailwindcss postcss autoprefixer', { cwd: demoDir, stdio: 'inherit' });
 
 // Create Tailwind and PostCSS configuration files
+
 const tailwindConfig = `module.exports = {
   content: [
     "./index.html",
@@ -62,6 +63,7 @@ const postcssConfig = `module.exports = {
 };
 `;
 fs.writeFileSync(path.join(demoDir, 'postcss.config.js'), postcssConfig);
+
 
 // Create index.css with Tailwind directives
 fs.writeFileSync(
