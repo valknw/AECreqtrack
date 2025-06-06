@@ -1,5 +1,5 @@
 import type { Requirement } from "../types";
-import { STATUSES, Status } from "../types";
+import { DEFAULT_STATUSES, Status } from "../types";
 
 export function requirementsToCSV(reqs: Requirement[]): string {
   const headers = [
@@ -56,8 +56,8 @@ export function parseCSV(text: string): Requirement[] {
     headers.forEach((h, i) => {
       record[h] = values[i] || "";
     });
-    if (!STATUSES.includes(record.status as Status)) {
-      record.status = Status.Draft;
+    if (!record.status) {
+      record.status = DEFAULT_STATUSES[0];
     }
     return record as Requirement;
   });

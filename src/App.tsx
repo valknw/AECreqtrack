@@ -21,8 +21,8 @@ import {
   Sun,
   X,
 } from "lucide-react";
-import type { Requirement } from "./types";
-import { STATUSES, Status } from "./types";
+import type { Requirement, Status } from "./types";
+import { useStatuses } from "./hooks/useStatuses";
 import { SAMPLE_REQUIREMENTS } from "./sampleData";
 import { useRequirements } from "./hooks/useRequirements";
 import { useProjects } from "./hooks/useProjects";
@@ -36,7 +36,7 @@ const LOGO_BLUE = "#0097D5";
 const DEFAULT_PROJECT = "Default";
 
 export default function App() {
-  const { projects, currentProject, createProject, switchProject } = useProjects([
+  const { projects, currentProject, createProject, switchProject, deleteProject } = useProjects([
     DEFAULT_PROJECT,
   ]);
   const {
@@ -47,6 +47,7 @@ export default function App() {
     exportCSVFile,
     importCSVFile,
   } = useRequirements(SAMPLE_REQUIREMENTS, currentProject);
+  const { statuses, setFromString } = useStatuses();
 
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState<string | undefined>(undefined);
@@ -67,7 +68,12 @@ export default function App() {
   const filteredRequirements = useMemo(() => {
     const q = search.toLowerCase();
     return requirements.filter((r) => {
-      const matchesText = r.title.toLowerCase().includes(q) || r.req_id.toLowerCase().includes(q);
+      const matchesText =
+        r.title.toLowerCase().includes(q) ||
+        r.req_id.toLowerCase().includes(q) ||
+        r.description.toLowerCase().includes(q) ||
+        r.spec_section.toLowerCase().includes(q) ||
+        r.comment.toLowerCase().includes(q);
       const matchesStatus = !filterStatus || r.status === filterStatus;
       return matchesText && matchesStatus;
     });
@@ -75,12 +81,12 @@ export default function App() {
 
   const coveragePercent = useMemo(() => {
     if (requirements.length === 0) return 0;
-    const verified = requirements.filter((r) => r.status === Status.Verified).length;
+    const verified = requirements.filter((r) => r.status === "verified").length;
     return Math.round((verified / requirements.length) * 100);
   }, [requirements]);
 
   const isReady = useMemo(
-    () => requirements.every((r) => r.status === Status.Verified || r.status === Status.Closed),
+    () => requirements.every((r) => r.status === "verified" || r.status === "closed"),
     [requirements]
   );
 
@@ -126,6 +132,21 @@ export default function App() {
             >
               New Project
             </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-logo text-logo"
+              onClick={() => {
+                if (
+                  currentProject &&
+                  confirm(`Delete project ${currentProject}?`)
+                ) {
+                  deleteProject(currentProject);
+                }
+              }}
+            >
+              Delete Project
+            </Button>
           </div>
           <div className="space-x-2 flex items-center">
             {(["list", "tree", "matrix", "dashboard"] as const).map((v) => (
@@ -142,6 +163,20 @@ export default function App() {
                 {v.charAt(0).toUpperCase() + v.slice(1)}
               </Button>
             ))}
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-logo text-logo"
+              onClick={() => {
+                const input = prompt(
+                  "Comma separated statuses",
+                  statuses.join(", ")
+                );
+                if (input) setFromString(input);
+              }}
+            >
+              Statuses
+            </Button>
             <Button
               size="sm"
               variant="outline"
@@ -259,7 +294,7 @@ export default function App() {
             <SelectItem value={ALL_VALUE} className="capitalize text-logo">
               All
             </SelectItem>
-            {STATUSES.map((s) => (
+            {statuses.map((s) => (
               <SelectItem key={s} value={s} className="capitalize text-logo">
                 {s}
               </SelectItem>
@@ -278,7 +313,8 @@ export default function App() {
             onChange={(e) => {
               const f = e.target.files?.[0];
               if (!f) return;
-              importCSVFile(f).catch((err) => alert(err.message));
+              const merge = confirm("Merge with existing requirements?");
+              importCSVFile(f, merge).catch((err) => alert(err.message));
               if (fileInputRef.current) fileInputRef.current.value = "";
             }}
           />
@@ -298,6 +334,7 @@ export default function App() {
               setDeleteDialogOpen(true);
             }}
             logoColor={LOGO_BLUE}
+            statuses={statuses}
           />
         )}
 
@@ -322,6 +359,7 @@ export default function App() {
               setDeleteDialogOpen(true);
             }}
             logoColor={LOGO_BLUE}
+            statuses={statuses}
           />
         )}
 
@@ -330,6 +368,7 @@ export default function App() {
             requirements={requirements}
             coveragePercent={coveragePercent}
             isReady={isReady}
+            statuses={statuses}
           />
         )}
       </div>

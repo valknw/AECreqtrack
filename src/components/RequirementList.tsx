@@ -1,5 +1,5 @@
 import type { Requirement } from "../types";
-import { Status, STATUSES } from "../types";
+import type { Status } from "../types";
 import {
   Card,
   CardContent,
@@ -17,6 +17,7 @@ interface Props {
   onDelete: (id: string) => void;
   filteredRequirements: Requirement[];
   logoColor: string;
+  statuses: string[];
 }
 
 export function RequirementList({
@@ -25,6 +26,7 @@ export function RequirementList({
   onDelete,
   filteredRequirements,
   logoColor,
+  statuses,
 }: Props) {
   return (
     <Card className="overflow-x-auto">
@@ -59,7 +61,7 @@ export function RequirementList({
                     }
                     className="w-32 capitalize border-logo text-logo"
                   >
-                    {STATUSES.map((s) => (
+                    {statuses.map((s) => (
                       <SelectItem
                         key={s}
                         value={s}

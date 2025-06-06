@@ -1,14 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SPEC_TREE = exports.SAMPLE_REQUIREMENTS = void 0;
-const types_1 = require("./types");
 exports.SAMPLE_REQUIREMENTS = [
     {
         req_id: "REQ-001",
         title: "User Authentication",
         description: "The system shall allow users to log in using email and password.",
         spec_section: "1.1",
-        status: types_1.Status.Approved,
+        status: "approved",
         comment: "Reviewed by QA",
     },
     {
@@ -16,7 +15,7 @@ exports.SAMPLE_REQUIREMENTS = [
         title: "Data Encryption",
         description: "All sensitive data must be encrypted at rest.",
         spec_section: "1.2",
-        status: types_1.Status.Draft,
+        status: "draft",
         comment: "Pending security review",
     },
     {
@@ -24,7 +23,7 @@ exports.SAMPLE_REQUIREMENTS = [
         title: "Audit Logging",
         description: "The system shall log all user actions for audit purposes.",
         spec_section: "2.1",
-        status: types_1.Status.Implemented,
+        status: "implemented",
         comment: "Logs available in /var/logs",
     },
     {
@@ -32,7 +31,7 @@ exports.SAMPLE_REQUIREMENTS = [
         title: "Password Complexity",
         description: "Passwords must be at least 12 characters, include a number and symbol.",
         spec_section: "1.1",
-        status: types_1.Status.Verified,
+        status: "verified",
         comment: "Tested",
     },
     {
@@ -40,7 +39,7 @@ exports.SAMPLE_REQUIREMENTS = [
         title: "Session Timeout",
         description: "User session times out after 15 minutes of inactivity.",
         spec_section: "1.1",
-        status: types_1.Status.Closed,
+        status: "closed",
         comment: "Deployed",
     },
 ];

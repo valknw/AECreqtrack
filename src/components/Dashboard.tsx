@@ -1,5 +1,5 @@
 import type { Requirement } from "../types";
-import { STATUSES } from "../types";
+
 import {
   Card,
   CardContent,
@@ -14,10 +14,11 @@ interface Props {
   requirements: Requirement[];
   coveragePercent: number;
   isReady: boolean;
+  statuses: string[];
 }
 
-export function Dashboard({ requirements, coveragePercent, isReady }: Props) {
-  const pieData = STATUSES.map((s) => ({
+export function Dashboard({ requirements, coveragePercent, isReady, statuses }: Props) {
+  const pieData = statuses.map((s) => ({
     name: s,
     value: requirements.filter((r) => r.status === s).length,
   }));

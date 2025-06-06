@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Requirement } from "../types";
-import { Status } from "../types";
+import { DEFAULT_STATUSES, Status } from "../types";
 import { parseCSV, requirementsToCSV } from "../utils/csv";
 
 const KEY_PREFIX = "requirements_";
@@ -44,13 +44,21 @@ export function useRequirements(initial: Requirement[], project: string) {
     }
   }, [requirements, storageKey]);
 
+  function generateId(reqs: Requirement[]): string {
+    const max = reqs.reduce((m, r) => {
+      const n = parseInt(r.req_id.replace(/^REQ-/, ""));
+      return isNaN(n) ? m : Math.max(m, n);
+    }, 0);
+    const next = max + 1;
+    return `REQ-${next.toString().padStart(3, "0")}`;
+  }
+
   const createRequirement = useCallback(
     (data: NewReq) => {
+      const id = generateId(requirements);
       const newItem: Requirement = {
-        req_id: `REQ-${(requirements.length + 1)
-          .toString()
-          .padStart(3, "0")}`,
-        status: Status.Draft,
+        req_id: id,
+        status: DEFAULT_STATUSES[0],
         comment: "",
         ...data,
       };
@@ -88,14 +96,26 @@ export function useRequirements(initial: Requirement[], project: string) {
     document.body.removeChild(link);
   }, [requirements]);
 
-  const importCSVFile = useCallback((file: File) => {
+  const importCSVFile = useCallback((file: File, merge = false) => {
     return new Promise<void>((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = () => {
         try {
           const text = reader.result as string;
           const newReqs = parseCSV(text);
-          setRequirements(newReqs);
+          if (merge) {
+            const existing = [...requirements];
+            let current = existing;
+            newReqs.forEach((r) => {
+              if (current.some((e) => e.req_id === r.req_id)) {
+                r.req_id = generateId(current);
+              }
+              current = [...current, r];
+            });
+            setRequirements(current);
+          } else {
+            setRequirements(newReqs);
+          }
           resolve();
         } catch (err) {
           reject(err);
@@ -104,7 +124,7 @@ export function useRequirements(initial: Requirement[], project: string) {
       reader.onerror = () => reject(reader.error);
       reader.readAsText(file);
     });
-  }, []);
+  }, [requirements]);
 
   return {
     requirements,

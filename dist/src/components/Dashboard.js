@@ -2,12 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Dashboard = Dashboard;
 const jsx_runtime_1 = require("react/jsx-runtime");
-const types_1 = require("../types");
 const card_1 = require("./ui/card");
 const recharts_1 = require("recharts");
 const COLORS = ["#0097D5", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
-function Dashboard({ requirements, coveragePercent, isReady }) {
-    const pieData = types_1.STATUSES.map((s) => ({
+function Dashboard({ requirements, coveragePercent, isReady, statuses }) {
+    const pieData = statuses.map((s) => ({
         name: s,
         value: requirements.filter((r) => r.status === s).length,
     }));
