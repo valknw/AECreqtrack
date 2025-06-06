@@ -79,16 +79,6 @@ export default function App() {
     });
   }, [requirements, search, filterStatus]);
 
-  const coveragePercent = useMemo(() => {
-    if (requirements.length === 0) return 0;
-    const verified = requirements.filter((r) => r.status === "verified").length;
-    return Math.round((verified / requirements.length) * 100);
-  }, [requirements]);
-
-  const isReady = useMemo(
-    () => requirements.every((r) => r.status === "verified" || r.status === "closed"),
-    [requirements]
-  );
 
   useEffect(() => {
     const root = document.documentElement;
@@ -364,12 +354,7 @@ export default function App() {
         )}
 
         {view === "dashboard" && (
-          <Dashboard
-            requirements={requirements}
-            coveragePercent={coveragePercent}
-            isReady={isReady}
-            statuses={statuses}
-          />
+          <Dashboard requirements={requirements} statuses={statuses} />
         )}
       </div>
 
