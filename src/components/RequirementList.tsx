@@ -1,4 +1,5 @@
-import { Requirement, Status, STATUSES } from "../types";
+import type { Requirement } from "../types";
+import { Status, STATUSES } from "../types";
 import {
   Card,
   CardContent,

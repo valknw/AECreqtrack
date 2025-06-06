@@ -1,4 +1,5 @@
-import { Requirement, STATUSES, Status } from "../types";
+import type { Requirement } from "../types";
+import { STATUSES, Status } from "../types";
 
 export function requirementsToCSV(reqs: Requirement[]): string {
   const headers = [

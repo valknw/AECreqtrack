@@ -18,7 +18,8 @@ import {
   SelectValue,
 } from "./src/components/ui/select";
 import { Plus, Save, Search, Upload, Download } from "lucide-react";
-import { Requirement, STATUSES, Status } from "./src/types";
+import type { Requirement } from "./src/types";
+import { STATUSES, Status } from "./src/types";
 import { SAMPLE_REQUIREMENTS } from "./src/sampleData";
 import { useRequirements } from "./src/hooks/useRequirements";
 import { useProjects } from "./src/hooks/useProjects";

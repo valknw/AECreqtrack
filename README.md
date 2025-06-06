@@ -68,17 +68,19 @@ inside a fresh Vite project.
    cd demo
    npm install
    ```
-8. **Run the provided setup script** from the repository root to copy the
-   application files and install the additional dependencies automatically:
+
+8. **Return to the repository root and run the setup script** to copy the
+   application files and install the additional dependencies:
 
 
    ```bash
+   cd ..
    node setupDemo.js demo
    ```
 
-9. **Start the development server** (still inside the `demo` folder):
-
+9. **Start the development server** inside `demo`:
    ```bash
+   cd demo
    npm run dev
    ```
 11. Open the URL printed in the terminal (typically
