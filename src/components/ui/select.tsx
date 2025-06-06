@@ -7,18 +7,7 @@ interface SelectProps {
   [key: string]: any;
 }
 
-
-export function Select({ value, onValueChange, children }: SelectProps) {
-  return (
-    <SelectContext.Provider value={{ value, onValueChange }}>
-      {children}
-    </SelectContext.Provider>
-  );
-}
-
-export function SelectTrigger(props: any) {
-  const ctx = useContext<SelectContextValue>(SelectContext as any);
-
+export function Select({ value, onValueChange, children, ...props }: SelectProps) {
   return (
     <select
       {...props}
