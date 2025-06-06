@@ -22,7 +22,7 @@ export function Select({ value, onValueChange, children }: SelectProps) {
 }
 
 export function SelectTrigger(props: any) {
-  const ctx = useContext(SelectContext);
+  const ctx = useContext<SelectContextValue>(SelectContext as any);
   return (
     <select
       {...props}

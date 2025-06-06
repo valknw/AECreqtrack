@@ -1,22 +1,61 @@
-import { ReactNode } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  cloneElement,
+  isValidElement,
+} from "react";
 
-interface DialogProps {
-  [key: string]: any;
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
+interface DialogContextValue {
+  open: boolean;
+  setOpen: (o: boolean) => void;
 }
 
-export function Dialog({ children, ...props }: DialogProps) {
-  return <div {...props}>{children}</div>;
+const DialogContext = createContext<DialogContextValue>({
+  open: false,
+  setOpen: () => {},
+});
+
+interface DialogProps {
+  open: boolean;
+  onOpenChange?: (open: boolean) => void;
+  children: ReactNode;
+  [key: string]: any;
+}
+
+export function Dialog({ open, onOpenChange, children, ...props }: DialogProps) {
+  return (
+    <DialogContext.Provider value={{ open, setOpen: onOpenChange || (() => {}) }}>
+      <div {...props} style={{ display: open ? "block" : "none" }}>
+        {children}
+      </div>
+    </DialogContext.Provider>
+  );
 }
 
 interface DialogTriggerProps {
   asChild?: boolean;
+  children: ReactNode;
   [key: string]: any;
 }
 
-export function DialogTrigger({ asChild, ...props }: DialogTriggerProps) {
-  return <button {...props} />;
+export function DialogTrigger({ asChild, children, ...props }: DialogTriggerProps) {
+  const { setOpen } = useContext<DialogContextValue>(DialogContext as any);
+  const handleClick = (e: any) => {
+    if (props.onClick) props.onClick(e);
+    setOpen(true);
+  };
+  if (asChild && isValidElement(children)) {
+    return cloneElement(children as any, {
+      ...props,
+      onClick: handleClick,
+    });
+  }
+  return (
+    <button {...props} onClick={handleClick}>
+      {children}
+    </button>
+  );
 }
 
 interface DialogContentProps {
