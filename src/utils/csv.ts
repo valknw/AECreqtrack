@@ -9,6 +9,7 @@ export function requirementsToCSV(reqs: Requirement[]): string {
     "spec_section",
     "status",
     "comment",
+    "verification",
   ];
   const rows = reqs.map((r) => [
     r.req_id,
@@ -17,6 +18,7 @@ export function requirementsToCSV(reqs: Requirement[]): string {
     r.spec_section,
     r.status,
     r.comment,
+    r.verification,
   ]);
   return [headers, ...rows]
     .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(","))
@@ -35,6 +37,7 @@ export function parseCSV(text: string): Requirement[] {
     "spec_section",
     "status",
     "comment",
+    "verification",
   ];
   for (const h of requiredHeaders) {
     if (!headers.includes(h)) {

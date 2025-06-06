@@ -2,7 +2,7 @@ const { requirementsToCSV, parseCSV } = require("../dist/src/utils/csv.js");
 const assert = require("assert");
 
 const sample = [
-  { req_id: "R1", title: "t", description: "d", spec_section: "s", status: "draft", comment: "c" },
+  { req_id: "R1", title: "t", description: "d", spec_section: "s", status: "draft", comment: "c", verification: "v" },
 ];
 
 const csv = requirementsToCSV(sample);
