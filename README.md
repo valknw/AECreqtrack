@@ -68,8 +68,10 @@ inside a fresh Vite project.
    cd demo
    npm install
    ```
+
 8. **Return to the repository root and run the setup script** to copy the
    application files and install the additional dependencies:
+
 
    ```bash
    cd ..
@@ -81,7 +83,7 @@ inside a fresh Vite project.
    cd demo
    npm run dev
    ```
-10. Open the URL printed in the terminal (typically
+11. Open the URL printed in the terminal (typically
     `http://localhost:5173`) in your browser to use AECreqtrack.
 
 Once running, you can:
