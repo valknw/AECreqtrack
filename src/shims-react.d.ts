@@ -38,6 +38,10 @@ declare module 'recharts' {
   export const Cell: any;
   export const Tooltip: any;
   export const ResponsiveContainer: any;
+  export const BarChart: any;
+  export const Bar: any;
+  export const XAxis: any;
+  export const YAxis: any;
 }
 
 declare module 'lucide-react' {

@@ -11,6 +11,26 @@ import { Input } from "./ui/input";
 import { Select, SelectItem } from "./ui/select";
 import { Trash } from "lucide-react";
 
+function highlight(text: string, query: string) {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(`(${escaped})`, "gi");
+  const parts = text.split(re);
+  return (
+    <>
+      {parts.map((p, i) =>
+        re.test(p) ? (
+          <mark key={i} className="bg-yellow-200">
+            {p}
+          </mark>
+        ) : (
+          p
+        )
+      )}
+    </>
+  );
+}
+
 interface Props {
   requirements: Requirement[];
   onUpdate: (id: string, patch: Partial<Requirement>) => void;
@@ -18,6 +38,7 @@ interface Props {
   filteredRequirements: Requirement[];
   logoColor: string;
   statuses: string[];
+  search: string;
 }
 
 export function RequirementList({
@@ -27,6 +48,7 @@ export function RequirementList({
   filteredRequirements,
   logoColor,
   statuses,
+  search,
 }: Props) {
   return (
     <Card className="overflow-x-auto">
@@ -49,10 +71,14 @@ export function RequirementList({
             {filteredRequirements.map((r) => (
               <tr key={r.req_id} className="border-b last:border-0 hover:bg-gray-50">
                 <td className="px-4 py-2 font-mono text-xs text-logo">
-                  {r.req_id}
+                  {highlight(r.req_id, search)}
                 </td>
-                <td className="px-4 py-2 text-logo">{r.title}</td>
-                <td className="px-4 py-2 text-logo">{r.spec_section}</td>
+                <td className="px-4 py-2 text-logo">
+                  {highlight(r.title, search)}
+                </td>
+                <td className="px-4 py-2 text-logo">
+                  {highlight(r.spec_section, search)}
+                </td>
                 <td className="px-4 py-2">
                   <Select
                     value={r.status}

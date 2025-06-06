@@ -37,7 +37,14 @@ const LOGO_BLUE = "#0097D5";
 const DEFAULT_PROJECT = "Default";
 
 export default function App() {
-  const { projects, currentProject, createProject, switchProject, deleteProject } = useProjects([
+  const {
+    projects,
+    currentProject,
+    createProject,
+    deleteProject,
+    switchProject,
+    renameProject,
+  } = useProjects([
     DEFAULT_PROJECT,
   ]);
   const {
@@ -51,7 +58,7 @@ export default function App() {
   const { statuses, setFromString } = useStatuses();
 
   const [search, setSearch] = useState("");
-  const [filterStatus, setFilterStatus] = useState<string | undefined>(undefined);
+  const [filterStatuses, setFilterStatuses] = useState<string[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newReq, setNewReq] = useState({ title: "", description: "", spec_section: "" });
   const [view, setView] = useState<
@@ -64,6 +71,11 @@ export default function App() {
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
+  const [newProjectDialogOpen, setNewProjectDialogOpen] = useState(false);
+  const [newProjectName, setNewProjectName] = useState("");
+  const [renameDialogOpen, setRenameDialogOpen] = useState(false);
+  const [renameProjectName, setRenameProjectName] = useState("");
+  const [deleteProjectDialogOpen, setDeleteProjectDialogOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window !== "undefined") {
@@ -81,10 +93,11 @@ export default function App() {
         r.description.toLowerCase().includes(q) ||
         r.spec_section.toLowerCase().includes(q) ||
         r.comment.toLowerCase().includes(q);
-      const matchesStatus = !filterStatus || r.status === filterStatus;
+      const matchesStatus =
+        filterStatuses.length === 0 || filterStatuses.includes(r.status);
       return matchesText && matchesStatus;
     });
-  }, [requirements, search, filterStatus]);
+  }, [requirements, search, filterStatuses]);
 
 
   useEffect(() => {
@@ -97,7 +110,7 @@ export default function App() {
   }, [darkMode]);
 
   const ALL_VALUE = "all";
-  const selectValue = filterStatus ?? ALL_VALUE;
+  const selectValue = filterStatuses.length === 0 ? [ALL_VALUE] : filterStatuses;
 
   return (
     <div className="min-h-screen bg-gray-50 p-8 fade-in">
@@ -126,8 +139,8 @@ export default function App() {
               variant="outline"
               className="border-logo text-logo"
               onClick={() => {
-                const name = prompt("Project name?");
-                if (name) createProject(name);
+                setNewProjectName("");
+                setNewProjectDialogOpen(true);
               }}
             >
               New Project
@@ -137,12 +150,18 @@ export default function App() {
               variant="outline"
               className="border-logo text-logo"
               onClick={() => {
-                if (
-                  currentProject &&
-                  confirm(`Delete project ${currentProject}?`)
-                ) {
-                  deleteProject(currentProject);
-                }
+                setRenameProjectName(currentProject);
+                setRenameDialogOpen(true);
+              }}
+            >
+              Rename
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-logo text-logo"
+              onClick={() => {
+                setDeleteProjectDialogOpen(true);
               }}
             >
               Delete Project
@@ -289,8 +308,15 @@ export default function App() {
             </div>
 
           <Select
+            multiple
             value={selectValue}
-            onValueChange={(v) => setFilterStatus(v == ALL_VALUE ? undefined : v)}
+            onValueChange={(v) =>
+              setFilterStatuses(
+                Array.isArray(v)
+                  ? v.filter((val) => val !== ALL_VALUE)
+                  : []
+              )
+            }
             className="w-40 border-logo text-logo capitalize"
           >
             <SelectItem value={ALL_VALUE} className="capitalize text-logo">
@@ -337,6 +363,7 @@ export default function App() {
             }}
             logoColor={LOGO_BLUE}
             statuses={statuses}
+            search={search}
           />
         )}
 
@@ -412,6 +439,114 @@ export default function App() {
               onClick={() => {
                 if (deleteTarget) deleteRequirement(deleteTarget);
                 setDeleteDialogOpen(false);
+              }}
+            >
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={newProjectDialogOpen} onOpenChange={setNewProjectDialogOpen}>
+        <DialogContent className="sm:max-w-[400px]">
+          <DialogHeader>
+            <DialogTitle className="text-logo">New Project</DialogTitle>
+            <DialogDescription className="text-[#333]">
+              Enter a project name.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-2">
+            <Input
+              value={newProjectName}
+              onChange={(e) => setNewProjectName(e.target.value)}
+              className="border-logo focus:ring-logo w-full"
+            />
+          </div>
+          <DialogFooter className="flex justify-end gap-2 mt-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setNewProjectDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              size="sm"
+              className="bg-logo text-white"
+              onClick={() => {
+                createProject(newProjectName);
+                setNewProjectDialogOpen(false);
+                setNewProjectName("");
+              }}
+              disabled={!newProjectName.trim()}
+            >
+              Save
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={renameDialogOpen} onOpenChange={setRenameDialogOpen}>
+        <DialogContent className="sm:max-w-[400px]">
+          <DialogHeader>
+            <DialogTitle className="text-logo">Rename Project</DialogTitle>
+          </DialogHeader>
+          <div className="mt-2">
+            <Input
+              value={renameProjectName}
+              onChange={(e) => setRenameProjectName(e.target.value)}
+              className="border-logo focus:ring-logo w-full"
+            />
+          </div>
+          <DialogFooter className="flex justify-end gap-2 mt-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setRenameDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              size="sm"
+              className="bg-logo text-white"
+              onClick={() => {
+                renameProject(currentProject, renameProjectName);
+                setRenameDialogOpen(false);
+              }}
+              disabled={!renameProjectName.trim()}
+            >
+              Save
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={deleteProjectDialogOpen}
+        onOpenChange={setDeleteProjectDialogOpen}
+      >
+        <DialogContent className="sm:max-w-[400px]">
+          <DialogHeader>
+            <DialogTitle className="text-logo">Delete Project</DialogTitle>
+            <DialogDescription className="text-[#333]">
+              Are you sure you want to delete project&nbsp;
+              <span className="text-logo">{currentProject}</span>?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex justify-end gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setDeleteProjectDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              size="sm"
+              className="bg-red-600 text-white hover:bg-red-700"
+              onClick={() => {
+                deleteProject(currentProject);
+                setDeleteProjectDialogOpen(false);
               }}
             >
               Delete

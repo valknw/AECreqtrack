@@ -50,6 +50,26 @@ export function useProjects(initialProjects: string[]) {
     [currentProject, projects]
   );
 
+  const renameProject = useCallback(
+    (oldName: string, newName: string) => {
+      if (!newName || oldName === newName || projects.includes(newName)) return;
+      setProjects(
+        projects.map((p) => (p === oldName ? newName : p))
+      );
+      if (typeof window !== "undefined") {
+        const data = localStorage.getItem(`requirements_${oldName}`);
+        if (data) {
+          localStorage.setItem(`requirements_${newName}`, data);
+          localStorage.removeItem(`requirements_${oldName}`);
+        }
+      }
+      if (currentProject === oldName) {
+        setCurrentProject(newName);
+      }
+    },
+    [projects, currentProject]
+  );
+
   const switchProject = useCallback(
     (name: string) => {
       if (projects.includes(name)) setCurrentProject(name);
@@ -62,6 +82,7 @@ export function useProjects(initialProjects: string[]) {
     currentProject,
     createProject,
     deleteProject,
+    renameProject,
     switchProject,
   } as const;
 }
