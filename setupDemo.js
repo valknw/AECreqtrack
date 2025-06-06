@@ -39,9 +39,9 @@ execSync('npm install lucide-react recharts', { cwd: demoDir, stdio: 'inherit' }
 
 // Install and configure Tailwind CSS
 execSync('npm install -D tailwindcss postcss autoprefixer', { cwd: demoDir, stdio: 'inherit' });
-execSync('npx tailwindcss init -p', { cwd: demoDir, stdio: 'inherit' });
 
-// Tailwind configuration
+// Create Tailwind and PostCSS configuration files
+
 const tailwindConfig = `module.exports = {
   content: [
     "./index.html",
@@ -54,6 +54,16 @@ const tailwindConfig = `module.exports = {
 };
 `;
 fs.writeFileSync(path.join(demoDir, 'tailwind.config.js'), tailwindConfig);
+
+const postcssConfig = `module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+`;
+fs.writeFileSync(path.join(demoDir, 'postcss.config.js'), postcssConfig);
+
 
 // Create index.css with Tailwind directives
 fs.writeFileSync(
