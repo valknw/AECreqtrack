@@ -72,9 +72,20 @@ inside a fresh Vite project.
    `demo/src/`, replacing the files created by Vite.
 
    The imports in `App.tsx` assume it resides one level above the `src`
-   directory. After copying the file into `demo/src`, update the paths by
-   removing the leading `src/` from each import statement (for example,
-   change `"./src/components/ui/button"` to `"./components/ui/button"`).
+   directory. After copying the file into `demo/src`, run the following
+   command to automatically remove the `src/` prefix from each import:
+
+   On macOS/Linux:
+
+   ```bash
+   sed -i 's#./src/#./#g' src/App.tsx
+   ```
+
+   On Windows PowerShell:
+
+   ```powershell
+   (Get-Content src/App.tsx) -replace './src/', './' | Set-Content src/App.tsx
+   ```
 
 9. **Start the development server**:
    ```bash
