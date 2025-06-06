@@ -1,29 +1,45 @@
-import { ReactNode, HTMLAttributes, ButtonHTMLAttributes } from "react";
+import { ReactNode } from "react";
 
-export function Dialog({ children }: { children: ReactNode }) {
-  return <div>{children}</div>;
+interface DialogProps {
+  [key: string]: any;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export function DialogTrigger(props: ButtonHTMLAttributes<HTMLButtonElement>) {
+export function Dialog({ children, ...props }: DialogProps) {
+  return <div {...props}>{children}</div>;
+}
+
+interface DialogTriggerProps {
+  asChild?: boolean;
+  [key: string]: any;
+}
+
+export function DialogTrigger({ asChild, ...props }: DialogTriggerProps) {
   return <button {...props} />;
 }
 
-export function DialogContent({ children }: { children: ReactNode }) {
-  return <div>{children}</div>;
+interface DialogContentProps {
+  children: ReactNode;
+  [key: string]: any;
 }
 
-export function DialogHeader({ children }: { children: ReactNode }) {
-  return <div>{children}</div>;
+export function DialogContent({ children, ...props }: DialogContentProps) {
+  return <div {...props}>{children}</div>;
 }
 
-export function DialogFooter({ children }: { children: ReactNode }) {
-  return <div>{children}</div>;
+export function DialogHeader({ children, ...props }: any) {
+  return <div {...props}>{children}</div>;
 }
 
-export function DialogTitle({ children }: { children: ReactNode }) {
-  return <h3>{children}</h3>;
+export function DialogFooter({ children, ...props }: any) {
+  return <div {...props}>{children}</div>;
 }
 
-export function DialogDescription({ children }: { children: ReactNode }) {
-  return <p>{children}</p>;
+export function DialogTitle({ children, ...props }: any) {
+  return <h3 {...props}>{children}</h3>;
+}
+
+export function DialogDescription({ children, ...props }: any) {
+  return <p {...props}>{children}</p>;
 }

@@ -21,9 +21,7 @@ export function Select({ value, onValueChange, children }: SelectProps) {
   );
 }
 
-export function SelectTrigger(
-  props: React.SelectHTMLAttributes<HTMLSelectElement>
-) {
+export function SelectTrigger(props: any) {
   const ctx = useContext(SelectContext);
   return (
     <select
@@ -40,9 +38,7 @@ export function SelectContent({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
-export function SelectItem(
-  props: React.OptionHTMLAttributes<HTMLOptionElement> & { value: string }
-) {
+export function SelectItem(props: any & { value: string }) {
   return <option {...props}>{props.children}</option>;
 }
 

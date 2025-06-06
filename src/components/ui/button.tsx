@@ -1,8 +1,7 @@
-import { ButtonHTMLAttributes } from "react";
-
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps {
   variant?: string;
   size?: string;
+  [key: string]: any;
 }
 
 export function Button({ variant, size, ...props }: ButtonProps) {
