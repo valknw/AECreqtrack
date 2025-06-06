@@ -52,14 +52,14 @@ function useRequirements(initial, project) {
             comment: "",
             ...data,
         };
-        setRequirements((prev) => [...prev, newItem]);
+        setRequirements([...requirements, newItem]);
     }, [requirements]);
     const updateRequirement = (0, react_1.useCallback)((id, patch) => {
-        setRequirements((prev) => prev.map((r) => (r.req_id === id ? { ...r, ...patch } : r)));
-    }, []);
+        setRequirements(requirements.map((r) => (r.req_id === id ? { ...r, ...patch } : r)));
+    }, [requirements]);
     const deleteRequirement = (0, react_1.useCallback)((id) => {
-        setRequirements((prev) => prev.filter((r) => r.req_id !== id));
-    }, []);
+        setRequirements(requirements.filter((r) => r.req_id !== id));
+    }, [requirements]);
     const exportCSVFile = (0, react_1.useCallback)(() => {
         const csvContent = (0, csv_1.requirementsToCSV)(requirements);
         const encoded = encodeURIComponent(csvContent);
