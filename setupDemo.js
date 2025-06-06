@@ -18,7 +18,7 @@ if (!fs.existsSync(demoSrc)) {
 }
 
 // Copy App.tsx
-fs.copyFileSync(path.join(repoRoot, 'App.tsx'), path.join(demoSrc, 'App.tsx'));
+fs.copyFileSync(path.join(repoRoot, 'src', 'App.tsx'), path.join(demoSrc, 'App.tsx'));
 
 // Copy contents of src directory
 const srcRoot = path.join(repoRoot, 'src');
@@ -28,11 +28,7 @@ for (const item of fs.readdirSync(srcRoot)) {
   fs.cpSync(srcPath, destPath, { recursive: true });
 }
 
-// Fix import paths in App.tsx
-const appPath = path.join(demoSrc, 'App.tsx');
-let appSource = fs.readFileSync(appPath, 'utf8');
-appSource = appSource.replace(/\.\/src\//g, './');
-fs.writeFileSync(appPath, appSource);
+
 
 // Install extra dependencies
 execSync('npm install lucide-react recharts', { cwd: demoDir, stdio: 'inherit' });

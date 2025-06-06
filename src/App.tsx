@@ -10,13 +10,7 @@ import {
   DialogTrigger,
 } from "./components/ui/dialog";
 import { Input } from "./components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./components/ui/select";
+import { Select, SelectItem } from "./components/ui/select";
 import { Plus, Save, Search, Upload, Download } from "lucide-react";
 import type { Requirement } from "./types";
 import { STATUSES, Status } from "./types";
@@ -86,17 +80,16 @@ export default function App() {
             Requirement Tracker
           </h1>
           <div className="flex items-center gap-4">
-            <Select value={currentProject} onValueChange={switchProject}>
-              <SelectTrigger className="w-40 border-logo">
-                <SelectValue placeholder="Select project" className="text-logo" />
-              </SelectTrigger>
-              <SelectContent>
-                {projects.map((p) => (
-                  <SelectItem key={p} value={p} className="text-logo">
-                    {p}
-                  </SelectItem>
-                ))}
-              </SelectContent>
+            <Select
+              value={currentProject}
+              onValueChange={switchProject}
+              className="w-40 border-logo text-logo"
+            >
+              {projects.map((p) => (
+                <SelectItem key={p} value={p} className="text-logo">
+                  {p}
+                </SelectItem>
+              ))}
             </Select>
             <Button
               size="sm"
@@ -209,20 +202,19 @@ export default function App() {
             />
           </div>
 
-          <Select value={selectValue} onValueChange={(v) => setFilterStatus(v === ALL_VALUE ? undefined : v)}>
-            <SelectTrigger className="w-40 border-logo">
-              <SelectValue placeholder="All statuses" className="text-logo" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={ALL_VALUE} className="capitalize text-logo">
-                All
+          <Select
+            value={selectValue}
+            onValueChange={(v) => setFilterStatus(v == ALL_VALUE ? undefined : v)}
+            className="w-40 border-logo text-logo capitalize"
+          >
+            <SelectItem value={ALL_VALUE} className="capitalize text-logo">
+              All
+            </SelectItem>
+            {STATUSES.map((s) => (
+              <SelectItem key={s} value={s} className="capitalize text-logo">
+                {s}
               </SelectItem>
-              {STATUSES.map((s) => (
-                <SelectItem key={s} value={s} className="capitalize text-logo">
-                  {s}
-                </SelectItem>
-              ))}
-            </SelectContent>
+            ))}
           </Select>
 
           <Button type="button" onClick={exportCSVFile} variant="outline" size="sm" className="border-logo text-logo">
