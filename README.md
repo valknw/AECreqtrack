@@ -71,11 +71,33 @@ inside a fresh Vite project.
 8. **Copy `App.tsx` and the `src/` directory** from the repository root into
    `demo/src/`, replacing the files created by Vite.
 
-9. **Start the development server**:
+9. **Install the additional dependencies** used by AECreqtrack inside the
+   `demo` folder:
+
+   ```bash
+   npm install lucide-react recharts
+   ```
+
+   The imports in `App.tsx` assume it resides one level above the `src`
+   directory. After copying the file into `demo/src`, run the following command
+   from inside `demo` to remove the `src/` prefix from each import:
+
+   On macOS (BSD `sed` requires an empty backup extension) and Linux:
+
+   ```bash
+   sed -i '' -e 's#./src/#./#g' src/App.tsx
+   ```
+
+   On Windows PowerShell:
+
+   ```powershell
+   (Get-Content src/App.tsx) -replace './src/', './' | Set-Content src/App.tsx
+   ```
+10. **Start the development server**:
    ```bash
    npm run dev
    ```
-10. Open the URL printed in the terminal (typically
+11. Open the URL printed in the terminal (typically
     `http://localhost:5173`) in your browser to use AECreqtrack.
 
 Once running, you can:
