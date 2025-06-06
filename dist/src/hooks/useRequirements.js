@@ -92,6 +92,7 @@ function useRequirements(initial, project) {
     }, []);
     return {
         requirements,
+        addRequirement: createRequirement,
         createRequirement,
         updateRequirement,
         deleteRequirement,

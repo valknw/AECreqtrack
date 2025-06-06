@@ -108,6 +108,7 @@ export function useRequirements(initial: Requirement[], project: string) {
 
   return {
     requirements,
+    addRequirement: createRequirement,
     createRequirement,
     updateRequirement,
     deleteRequirement,

@@ -82,3 +82,7 @@ All data is persisted in the browser, so refreshing the page keeps your progress
 
 All of these commands can be executed from the integrated terminal inside Visual
 Studio Code, making it easy for beginners to experiment with the project.
+
+## API
+
+The `useRequirements` hook exposes several helpers for manipulating the requirement list. It now also returns an `addRequirement` function, which is an alias for `createRequirement` and can be used in the same way to append a new requirement to the current project.
