@@ -1,6 +1,6 @@
 import { Requirement } from "../types";
 import { SPEC_TREE } from "../sampleData";
-import { Button } from "@/components/ui/button";
+import { Button } from "./ui/button";
 import { Trash } from "lucide-react";
 
 interface Props {

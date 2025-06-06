@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "./src/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,15 +8,15 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+} from "./src/components/ui/dialog";
+import { Input } from "./src/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "./src/components/ui/select";
 import { Plus, Save, Search, Upload, Download } from "lucide-react";
 import { Requirement, STATUSES, Status } from "./src/types";
 import { SAMPLE_REQUIREMENTS } from "./src/sampleData";

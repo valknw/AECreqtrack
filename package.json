@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "lucide-react": "^0.355.0"
+    "lucide-react": "^0.355.0",
+    "recharts": "^2.8.0"
   },
   "devDependencies": {
     "typescript": "^5.0.0"
