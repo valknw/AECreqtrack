@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import { Button } from "./components/ui/button";
 import {
   Dialog,
@@ -11,7 +11,16 @@ import {
 } from "./components/ui/dialog";
 import { Input } from "./components/ui/input";
 import { Select, SelectItem } from "./components/ui/select";
-import { Plus, Save, Search, Upload, Download } from "lucide-react";
+import {
+  Plus,
+  Save,
+  Search,
+  Upload,
+  Download,
+  Moon,
+  Sun,
+  X,
+} from "lucide-react";
 import type { Requirement } from "./types";
 import { STATUSES, Status } from "./types";
 import { SAMPLE_REQUIREMENTS } from "./sampleData";
@@ -48,6 +57,12 @@ export default function App() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("darkMode") === "true";
+    }
+    return false;
+  });
 
   const filteredRequirements = useMemo(() => {
     const q = search.toLowerCase();
@@ -68,6 +83,15 @@ export default function App() {
     () => requirements.every((r) => r.status === Status.Verified || r.status === Status.Closed),
     [requirements]
   );
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (darkMode) root.classList.add("dark");
+    else root.classList.remove("dark");
+    if (typeof window !== "undefined") {
+      localStorage.setItem("darkMode", String(darkMode));
+    }
+  }, [darkMode]);
 
   const ALL_VALUE = "all";
   const selectValue = filterStatus ?? ALL_VALUE;
@@ -103,7 +127,7 @@ export default function App() {
               New Project
             </Button>
           </div>
-          <div className="space-x-2">
+          <div className="space-x-2 flex items-center">
             {(["list", "tree", "matrix", "dashboard"] as const).map((v) => (
               <Button
                 key={v}
@@ -118,6 +142,18 @@ export default function App() {
                 {v.charAt(0).toUpperCase() + v.slice(1)}
               </Button>
             ))}
+            <Button
+              size="sm"
+              variant="outline"
+              className="border-logo text-logo"
+              onClick={() => setDarkMode(!darkMode)}
+            >
+              {darkMode ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Moon className="h-4 w-4" />
+              )}
+            </Button>
           </div>
         </header>
 
@@ -139,6 +175,7 @@ export default function App() {
                   <span className="text-logo">Title *</span>
                   <Input
                     value={newReq.title}
+                    placeholder="Short summary"
                     onChange={(e) =>
                       setNewReq({
                         ...newReq,
@@ -152,6 +189,7 @@ export default function App() {
                   <span className="text-logo">Description *</span>
                   <Input
                     value={newReq.description}
+                    placeholder="Detailed description"
                     onChange={(e) =>
                       setNewReq({
                         ...newReq,
@@ -165,6 +203,7 @@ export default function App() {
                   <span className="text-logo">Specification Section</span>
                   <Input
                     value={newReq.spec_section}
+                    placeholder="e.g. 1.1"
                     onChange={(e) =>
                       setNewReq({
                         ...newReq,
@@ -192,15 +231,25 @@ export default function App() {
             </DialogContent>
           </Dialog>
 
-          <div className="flex grow items-center gap-2 max-w-xs">
-            <Search className="h-4 w-4" style={{ color: LOGO_BLUE }} />
-            <Input
-              placeholder="Search by ID or title..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="border-logo focus:ring-logo"
-            />
-          </div>
+            <div className="flex grow items-center gap-2 max-w-xs">
+              <Search className="h-4 w-4" style={{ color: LOGO_BLUE }} />
+              <Input
+                placeholder="Search by ID or title..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="border-logo focus:ring-logo"
+              />
+              {search && (
+                <button
+                  type="button"
+                  onClick={() => setSearch("")}
+                  className="text-logo"
+                  aria-label="Clear search"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
 
           <Select
             value={selectValue}

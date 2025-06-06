@@ -45,7 +45,7 @@ export function RequirementList({
           </thead>
           <tbody>
             {filteredRequirements.map((r) => (
-              <tr key={r.req_id} className="border-b last:border-0">
+              <tr key={r.req_id} className="border-b last:border-0 hover:bg-gray-50">
                 <td className="px-4 py-2 font-mono text-xs text-logo">
                   {r.req_id}
                 </td>
