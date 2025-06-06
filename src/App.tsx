@@ -113,9 +113,12 @@ export default function App() {
     <div className="min-h-screen bg-gray-50 p-8 fade-in">
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
         <header className="flex items-center justify-between">
-          <h1 className="text-3xl font-semibold tracking-tight text-logo">
-            Requirement Tracker
-          </h1>
+          <div className="flex items-center gap-2">
+            <img src="/logo.svg" alt="Requirement Tracker logo" className="h-8 w-8" />
+            <h1 className="text-3xl font-semibold tracking-tight text-logo">
+              Requirement Tracker
+            </h1>
+          </div>
           <div className="flex items-center gap-4">
             <Select
               value={currentProject}
