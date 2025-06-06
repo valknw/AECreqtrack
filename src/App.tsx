@@ -30,6 +30,7 @@ import { RequirementList } from "./components/RequirementList";
 import { SpecTree } from "./components/SpecTree";
 import { TraceMatrix } from "./components/TraceMatrix";
 import { Dashboard } from "./components/Dashboard";
+import { VerificationTab } from "./components/VerificationTab";
 import "./styles.css";
 
 const LOGO_BLUE = "#0097D5";
@@ -53,7 +54,13 @@ export default function App() {
   const [filterStatus, setFilterStatus] = useState<string | undefined>(undefined);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newReq, setNewReq] = useState({ title: "", description: "", spec_section: "" });
-  const [view, setView] = useState<"list" | "tree" | "matrix" | "dashboard">("list");
+  const [view, setView] = useState<
+    | "list"
+    | "tree"
+    | "matrix"
+    | "dashboard"
+    | "verification"
+  >("list");
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
@@ -96,9 +103,12 @@ export default function App() {
     <div className="min-h-screen bg-gray-50 p-8 fade-in">
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
         <header className="flex items-center justify-between">
-          <h1 className="text-3xl font-semibold tracking-tight text-logo">
-            Requirement Tracker
-          </h1>
+          <div className="flex items-center gap-2">
+            <img src="/logo.svg" alt="Requirement Tracker logo" className="h-8 w-8" />
+            <h1 className="text-3xl font-semibold tracking-tight text-logo">
+              Requirement Tracker
+            </h1>
+          </div>
           <div className="flex items-center gap-4">
             <Select
               value={currentProject}
@@ -139,7 +149,9 @@ export default function App() {
             </Button>
           </div>
           <div className="space-x-2 flex items-center">
-            {(["list", "tree", "matrix", "dashboard"] as const).map((v) => (
+            {(
+              ["list", "tree", "matrix", "dashboard", "verification"] as const
+            ).map((v) => (
               <Button
                 key={v}
                 variant={view === v ? "default" : "outline"}
@@ -355,6 +367,7 @@ export default function App() {
 
         {view === "dashboard" && (
           <Dashboard requirements={requirements} statuses={statuses} />
+
         )}
       </div>
 

@@ -5,7 +5,7 @@ import { parseCSV, requirementsToCSV } from "../utils/csv";
 
 const KEY_PREFIX = "requirements_";
 
-type NewReq = Omit<Requirement, "req_id" | "status" | "comment">;
+type NewReq = Omit<Requirement, "req_id" | "status" | "comment" | "verification">;
 
 export function useRequirements(initial: Requirement[], project: string) {
   const storageKey = `${KEY_PREFIX}${project}`;
@@ -15,7 +15,8 @@ export function useRequirements(initial: Requirement[], project: string) {
     try {
       const stored = localStorage.getItem(storageKey);
       if (stored) {
-        return JSON.parse(stored) as Requirement[];
+        const parsed = JSON.parse(stored) as Requirement[];
+        return parsed.map((r) => ({ verification: "", ...r }));
       }
     } catch {
       // ignore corrupt data
@@ -29,7 +30,8 @@ export function useRequirements(initial: Requirement[], project: string) {
     try {
       const stored = localStorage.getItem(storageKey);
       if (stored) {
-        setRequirements(JSON.parse(stored) as Requirement[]);
+        const parsed = JSON.parse(stored) as Requirement[];
+        setRequirements(parsed.map((r) => ({ verification: "", ...r })));
       } else {
         setRequirements(initial);
       }
@@ -60,6 +62,7 @@ export function useRequirements(initial: Requirement[], project: string) {
         req_id: id,
         status: DEFAULT_STATUSES[0],
         comment: "",
+        verification: "",
         ...data,
       };
       setRequirements([...requirements, newItem]);
@@ -126,6 +129,31 @@ export function useRequirements(initial: Requirement[], project: string) {
     });
   }, [requirements]);
 
+  const exportStatusPDF = useCallback(async () => {
+    if (typeof window === "undefined") return;
+    const win = window as any;
+    if (!win.jspdf) {
+      await new Promise<void>((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src =
+          "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js";
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error("Failed to load jsPDF"));
+        document.body.appendChild(script);
+      });
+    }
+    const { jsPDF } = (window as any).jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Requirement Status Summary", 10, 10);
+    let y = 20;
+    requirements.forEach((r) => {
+      doc.text(`${r.req_id} - ${r.status} - ${r.comment}`, 10, y);
+      y += 8;
+    });
+    doc.save("status-summary.pdf");
+  }, [requirements]);
+
   return {
     requirements,
     addRequirement: createRequirement,
@@ -133,6 +161,7 @@ export function useRequirements(initial: Requirement[], project: string) {
     updateRequirement,
     deleteRequirement,
     exportCSVFile,
+    exportStatusPDF,
     importCSVFile,
   } as const;
 }

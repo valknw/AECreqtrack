@@ -17,6 +17,7 @@ interface Props {
 }
 
 export function Dashboard({ requirements, statuses }: Props) {
+
   const finalStatuses = useMemo(() => {
     // treat the last two statuses as "complete" states
     return statuses.slice(-2);
@@ -31,6 +32,7 @@ export function Dashboard({ requirements, statuses }: Props) {
   const isReady = useMemo(
     () => requirements.every((r) => finalStatuses.includes(r.status)),
     [requirements, finalStatuses]
+
   );
 
   const pieData = statuses.map((s) => ({
