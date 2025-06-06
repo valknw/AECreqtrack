@@ -37,4 +37,44 @@ fs.writeFileSync(appPath, appSource);
 // Install extra dependencies
 execSync('npm install lucide-react recharts', { cwd: demoDir, stdio: 'inherit' });
 
+// Install and configure Tailwind CSS
+execSync('npm install -D tailwindcss postcss autoprefixer', { cwd: demoDir, stdio: 'inherit' });
+
+// Create Tailwind and PostCSS configuration files
+const tailwindConfig = `module.exports = {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
+`;
+fs.writeFileSync(path.join(demoDir, 'tailwind.config.js'), tailwindConfig);
+
+const postcssConfig = `module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+`;
+fs.writeFileSync(path.join(demoDir, 'postcss.config.js'), postcssConfig);
+
+// Create index.css with Tailwind directives
+fs.writeFileSync(
+  path.join(demoSrc, 'index.css'),
+  '@tailwind base;\n@tailwind components;\n@tailwind utilities;\n'
+);
+
+// Ensure main.tsx imports the Tailwind stylesheet
+const mainPath = path.join(demoSrc, 'main.tsx');
+let mainSrc = fs.readFileSync(mainPath, 'utf8');
+if (!mainSrc.includes("./index.css")) {
+  mainSrc = `import './index.css';\n` + mainSrc;
+  fs.writeFileSync(mainPath, mainSrc);
+}
+
 console.log(`Demo setup complete. Run \`npm run dev\` inside ${demoDir}.`);
