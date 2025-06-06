@@ -8,13 +8,7 @@ import {
 } from "./ui/card";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
+import { Select, SelectItem } from "./ui/select";
 import { Trash } from "lucide-react";
 
 interface Props {
@@ -63,21 +57,17 @@ export function RequirementList({
                     onValueChange={(v) =>
                       onUpdate(r.req_id, { status: v as Status })
                     }
+                    className="w-32 capitalize border-logo text-logo"
                   >
-                    <SelectTrigger className="w-32 capitalize border-logo">
-                      <SelectValue className="text-logo" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {STATUSES.map((s) => (
-                        <SelectItem
-                          key={s}
-                          value={s}
-                          className="capitalize text-logo"
-                        >
-                          {s}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
+                    {STATUSES.map((s) => (
+                      <SelectItem
+                        key={s}
+                        value={s}
+                        className="capitalize text-logo"
+                      >
+                        {s}
+                      </SelectItem>
+                    ))}
                   </Select>
                 </td>
                 <td className="px-4 py-2">

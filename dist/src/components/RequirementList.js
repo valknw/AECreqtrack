@@ -1,41 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RequirementList = RequirementList;
+const jsx_runtime_1 = require("react/jsx-runtime");
 const types_1 = require("../types");
-const card_1 = require("@/components/ui/card");
-const button_1 = require("@/components/ui/button");
-const input_1 = require("@/components/ui/input");
-const select_1 = require("@/components/ui/select");
+const card_1 = require("./ui/card");
+const button_1 = require("./ui/button");
+const input_1 = require("./ui/input");
+const select_1 = require("./ui/select");
 const lucide_react_1 = require("lucide-react");
 function RequirementList({ requirements, onUpdate, onDelete, filteredRequirements, logoColor, }) {
-    return (React.createElement(card_1.Card, { className: "overflow-x-auto" },
-        React.createElement(card_1.CardHeader, null,
-            React.createElement(card_1.CardTitle, { className: "text-logo" }, "Requirements List")),
-        React.createElement(card_1.CardContent, { className: "p-0" },
-            React.createElement("table", { className: "min-w-full text-sm" },
-                React.createElement("thead", { className: "bg-gray-100 text-left font-medium" },
-                    React.createElement("tr", null,
-                        React.createElement("th", { className: "px-4 py-2 text-logo" }, "ID"),
-                        React.createElement("th", { className: "px-4 py-2 text-logo" }, "Title"),
-                        React.createElement("th", { className: "px-4 py-2 text-logo" }, "Spec Section"),
-                        React.createElement("th", { className: "px-4 py-2 text-logo" }, "Status"),
-                        React.createElement("th", { className: "px-4 py-2 text-logo" }, "Comment"),
-                        React.createElement("th", { className: "px-4 py-2 text-logo" }, "Actions"))),
-                React.createElement("tbody", null,
-                    filteredRequirements.map((r) => (React.createElement("tr", { key: r.req_id, className: "border-b last:border-0" },
-                        React.createElement("td", { className: "px-4 py-2 font-mono text-xs text-logo" }, r.req_id),
-                        React.createElement("td", { className: "px-4 py-2 text-logo" }, r.title),
-                        React.createElement("td", { className: "px-4 py-2 text-logo" }, r.spec_section),
-                        React.createElement("td", { className: "px-4 py-2" },
-                            React.createElement(select_1.Select, { value: r.status, onValueChange: (v) => onUpdate(r.req_id, { status: v }) },
-                                React.createElement(select_1.SelectTrigger, { className: "w-32 capitalize border-logo" },
-                                    React.createElement(select_1.SelectValue, { className: "text-logo" })),
-                                React.createElement(select_1.SelectContent, null, types_1.STATUSES.map((s) => (React.createElement(select_1.SelectItem, { key: s, value: s, className: "capitalize text-logo" }, s)))))),
-                        React.createElement("td", { className: "px-4 py-2" },
-                            React.createElement(input_1.Input, { value: r.comment, onChange: (e) => onUpdate(r.req_id, { comment: e.target.value }), className: "w-full border-logo focus:ring-logo text-logo" })),
-                        React.createElement("td", { className: "px-4 py-2" },
-                            React.createElement(button_1.Button, { variant: "ghost", size: "sm", onClick: () => onDelete(r.req_id) },
-                                React.createElement(lucide_react_1.Trash, { className: "h-4 w-4", style: { color: logoColor } })))))),
-                    filteredRequirements.length === 0 && (React.createElement("tr", null,
-                        React.createElement("td", { colSpan: 6, className: "px-4 py-8 text-center text-logo" }, "No requirements match the current filters."))))))));
+    return ((0, jsx_runtime_1.jsxs)(card_1.Card, { className: "overflow-x-auto", children: [(0, jsx_runtime_1.jsx)(card_1.CardHeader, { children: (0, jsx_runtime_1.jsx)(card_1.CardTitle, { className: "text-logo", children: "Requirements List" }) }), (0, jsx_runtime_1.jsx)(card_1.CardContent, { className: "p-0", children: (0, jsx_runtime_1.jsxs)("table", { className: "min-w-full text-sm", children: [(0, jsx_runtime_1.jsx)("thead", { className: "bg-gray-100 text-left font-medium", children: (0, jsx_runtime_1.jsxs)("tr", { children: [(0, jsx_runtime_1.jsx)("th", { className: "px-4 py-2 text-logo", children: "ID" }), (0, jsx_runtime_1.jsx)("th", { className: "px-4 py-2 text-logo", children: "Title" }), (0, jsx_runtime_1.jsx)("th", { className: "px-4 py-2 text-logo", children: "Spec Section" }), (0, jsx_runtime_1.jsx)("th", { className: "px-4 py-2 text-logo", children: "Status" }), (0, jsx_runtime_1.jsx)("th", { className: "px-4 py-2 text-logo", children: "Comment" }), (0, jsx_runtime_1.jsx)("th", { className: "px-4 py-2 text-logo", children: "Actions" })] }) }), (0, jsx_runtime_1.jsxs)("tbody", { children: [filteredRequirements.map((r) => ((0, jsx_runtime_1.jsxs)("tr", { className: "border-b last:border-0", children: [(0, jsx_runtime_1.jsx)("td", { className: "px-4 py-2 font-mono text-xs text-logo", children: r.req_id }), (0, jsx_runtime_1.jsx)("td", { className: "px-4 py-2 text-logo", children: r.title }), (0, jsx_runtime_1.jsx)("td", { className: "px-4 py-2 text-logo", children: r.spec_section }), (0, jsx_runtime_1.jsx)("td", { className: "px-4 py-2", children: (0, jsx_runtime_1.jsx)(select_1.Select, { value: r.status, onValueChange: (v) => onUpdate(r.req_id, { status: v }), className: "w-32 capitalize border-logo text-logo", children: types_1.STATUSES.map((s) => ((0, jsx_runtime_1.jsx)(select_1.SelectItem, { value: s, className: "capitalize text-logo", children: s }, s))) }) }), (0, jsx_runtime_1.jsx)("td", { className: "px-4 py-2", children: (0, jsx_runtime_1.jsx)(input_1.Input, { value: r.comment, onChange: (e) => onUpdate(r.req_id, { comment: e.target.value }), className: "w-full border-logo focus:ring-logo text-logo" }) }), (0, jsx_runtime_1.jsx)("td", { className: "px-4 py-2", children: (0, jsx_runtime_1.jsx)(button_1.Button, { variant: "ghost", size: "sm", onClick: () => onDelete(r.req_id), children: (0, jsx_runtime_1.jsx)(lucide_react_1.Trash, { className: "h-4 w-4", style: { color: logoColor } }) }) })] }, r.req_id))), filteredRequirements.length === 0 && ((0, jsx_runtime_1.jsx)("tr", { children: (0, jsx_runtime_1.jsx)("td", { colSpan: 6, className: "px-4 py-8 text-center text-logo", children: "No requirements match the current filters." }) }))] })] }) })] }));
 }

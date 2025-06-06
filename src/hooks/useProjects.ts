@@ -30,7 +30,7 @@ export function useProjects(initialProjects: string[]) {
   const createProject = useCallback(
     (name: string) => {
       if (!name || projects.includes(name)) return;
-      setProjects((prev) => [...prev, name]);
+      setProjects([...projects, name]);
       setCurrentProject(name);
     },
     [projects]
@@ -38,12 +38,10 @@ export function useProjects(initialProjects: string[]) {
 
   const deleteProject = useCallback(
     (name: string) => {
-      setProjects((prev) => prev.filter((p) => p !== name));
+      setProjects(projects.filter((p) => p !== name));
       if (currentProject === name) {
-        setCurrentProject((prev) => {
-          const remaining = projects.filter((p) => p !== name);
-          return remaining[0] ?? "";
-        });
+        const remaining = projects.filter((p) => p !== name);
+        setCurrentProject(remaining[0] ?? "");
       }
       if (typeof window !== "undefined") {
         localStorage.removeItem(`requirements_${name}`);

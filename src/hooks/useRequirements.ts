@@ -54,20 +54,26 @@ export function useRequirements(initial: Requirement[], project: string) {
         comment: "",
         ...data,
       };
-      setRequirements((prev) => [...prev, newItem]);
+      setRequirements([...requirements, newItem]);
     },
     [requirements]
   );
 
-  const updateRequirement = useCallback((id: string, patch: Partial<Requirement>) => {
-    setRequirements((prev) =>
-      prev.map((r) => (r.req_id === id ? { ...r, ...patch } : r))
-    );
-  }, []);
+  const updateRequirement = useCallback(
+    (id: string, patch: Partial<Requirement>) => {
+      setRequirements(
+        requirements.map((r) => (r.req_id === id ? { ...r, ...patch } : r))
+      );
+    },
+    [requirements]
+  );
 
-  const deleteRequirement = useCallback((id: string) => {
-    setRequirements((prev) => prev.filter((r) => r.req_id !== id));
-  }, []);
+  const deleteRequirement = useCallback(
+    (id: string) => {
+      setRequirements(requirements.filter((r) => r.req_id !== id));
+    },
+    [requirements]
+  );
 
   const exportCSVFile = useCallback(() => {
     const csvContent = requirementsToCSV(requirements);
