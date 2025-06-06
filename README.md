@@ -61,6 +61,7 @@ inside a fresh Vite project.
    ```bash
    node tests/csv.test.js
    ```
+
 7. **Create a React project** in a new folder (this guide uses `demo`). Run:
    ```bash
    npm create vite@latest demo -- --template react-ts
@@ -69,6 +70,7 @@ inside a fresh Vite project.
    ```
 8. **Copy `App.tsx` and the `src/` directory** from the repository root into
    `demo/src/`, replacing the files created by Vite.
+
 9. **Start the development server**:
    ```bash
    npm run dev
@@ -85,6 +87,7 @@ Once running, you can:
 5. Import or export a CSV file with the **Import CSV** and **Export CSV** buttons.
 
 All data is persisted in the browser, so refreshing the page keeps your progress for each project.
+
 
 All of these commands can be executed from the integrated terminal inside Visual
 Studio Code, making it easy for beginners to experiment with the project.
