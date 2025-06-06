@@ -49,3 +49,49 @@ Open the local development URL displayed by Vite (typically `http://localhost:51
 5. Import or export a CSV file with the **Import CSV** and **Export CSV** buttons.
 
 All data is persisted in the browser, so refreshing the page keeps your progress for each project.
+
+## Getting started in Visual Studio Code
+
+The following guide walks you through opening the project in VS Code and running
+the example interface from scratch.
+
+1. **Install prerequisites**
+   - [Node.js](https://nodejs.org/) 18 or newer
+   - [Git](https://git-scm.com/) for cloning the repository
+   - [Visual Studio Code](https://code.visualstudio.com/)
+2. **Clone or download the repository.** In a terminal run:
+   ```bash
+   git clone https://github.com/yourname/AECreqtrack.git
+   cd AECreqtrack
+   ```
+   Alternatively, download the ZIP archive and extract it.
+3. **Open the folder in VS Code** (`File` → `Open Folder...`).
+4. **Install dependencies** using the integrated terminal:
+   ```bash
+   npm install
+   ```
+5. **Compile the TypeScript sources**:
+   ```bash
+   npx tsc
+   ```
+6. **Run the included test** to verify everything works:
+   ```bash
+   node tests/csv.test.js
+   ```
+7. **Create a React project** where AECreqtrack will run. From the terminal:
+   ```bash
+   npm create vite@latest my-app -- --template react-ts
+   cd my-app
+   npm install
+   ```
+8. **Copy `App.tsx` and the `src/` directory** from this repository into
+   `my-app/src/` (replace the generated files).
+9. **Start the development server**:
+   ```bash
+   npm run dev
+   ```
+10. Open the URL printed in the terminal (typically
+    `http://localhost:5173`) in your browser to use AECreqtrack.
+
+All of these commands can be executed from the integrated terminal inside Visual
+Studio Code, making it easy for beginners to experiment with the project.
