@@ -36,3 +36,18 @@
 .dark .focus\:ring-logo:focus {
   outline-color: #66bfff;
 }
+
+/* Modern UI enhancements */
+body {
+  transition: background-color 0.2s ease-in-out;
+}
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hover\\:bg-logo-dark:hover {
+  background-color: #007bb6;
+}

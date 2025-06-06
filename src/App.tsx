@@ -97,7 +97,7 @@ export default function App() {
   const selectValue = filterStatus ?? ALL_VALUE;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-gray-50 p-8 fade-in">
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
         <header className="flex items-center justify-between">
           <h1 className="text-3xl font-semibold tracking-tight text-logo">

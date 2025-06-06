@@ -26,11 +26,19 @@ interface DialogProps {
 export function Dialog({ open, onOpenChange, children, ...props }: DialogProps) {
   return (
     <DialogContext.Provider value={{ open, setOpen: onOpenChange || (() => {}) }}>
-
-      <div {...props} style={{ display: open ? "block" : "none" }}>
-        {children}
-      </div>
-
+      {open && (
+        <div
+          {...props}
+          className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 fade-in ${
+            props.className || ""
+          }`}
+          onClick={(e) => {
+            if (e.target === e.currentTarget) onOpenChange?.(false);
+          }}
+        >
+          {children}
+        </div>
+      )}
     </DialogContext.Provider>
   );
 }
@@ -66,7 +74,14 @@ interface DialogContentProps {
 }
 
 export function DialogContent({ children, ...props }: DialogContentProps) {
-  return <div {...props}>{children}</div>;
+  return (
+    <div
+      {...props}
+      className={`bg-white rounded-lg p-6 shadow-lg fade-in ${props.className || ""}`}
+    >
+      {children}
+    </div>
+  );
 }
 
 export function DialogHeader({ children, ...props }: any) {
