@@ -54,8 +54,8 @@ function parseCSV(text) {
         headers.forEach((h, i) => {
             record[h] = values[i] || "";
         });
-        if (!types_1.STATUSES.includes(record.status)) {
-            record.status = types_1.Status.Draft;
+        if (!record.status) {
+            record.status = types_1.DEFAULT_STATUSES[0];
         }
         return record;
     });

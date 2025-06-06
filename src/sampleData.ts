@@ -1,5 +1,5 @@
 import type { Requirement } from "./types";
-import { Status } from "./types";
+
 
 export const SAMPLE_REQUIREMENTS: Requirement[] = [
   {
@@ -7,7 +7,7 @@ export const SAMPLE_REQUIREMENTS: Requirement[] = [
     title: "User Authentication",
     description: "The system shall allow users to log in using email and password.",
     spec_section: "1.1",
-    status: Status.Approved,
+    status: "approved",
     comment: "Reviewed by QA",
   },
   {
@@ -15,7 +15,7 @@ export const SAMPLE_REQUIREMENTS: Requirement[] = [
     title: "Data Encryption",
     description: "All sensitive data must be encrypted at rest.",
     spec_section: "1.2",
-    status: Status.Draft,
+    status: "draft",
     comment: "Pending security review",
   },
   {
@@ -23,7 +23,7 @@ export const SAMPLE_REQUIREMENTS: Requirement[] = [
     title: "Audit Logging",
     description: "The system shall log all user actions for audit purposes.",
     spec_section: "2.1",
-    status: Status.Implemented,
+    status: "implemented",
     comment: "Logs available in /var/logs",
   },
   {
@@ -32,7 +32,7 @@ export const SAMPLE_REQUIREMENTS: Requirement[] = [
     description:
       "Passwords must be at least 12 characters, include a number and symbol.",
     spec_section: "1.1",
-    status: Status.Verified,
+    status: "verified",
     comment: "Tested",
   },
   {
@@ -40,7 +40,7 @@ export const SAMPLE_REQUIREMENTS: Requirement[] = [
     title: "Session Timeout",
     description: "User session times out after 15 minutes of inactivity.",
     spec_section: "1.1",
-    status: Status.Closed,
+    status: "closed",
     comment: "Deployed",
   },
 ];

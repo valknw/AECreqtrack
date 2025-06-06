@@ -6,11 +6,13 @@ AECreqtrack is a lightweight requirements tracker implemented with **React** and
 
 - **Multiple projects** – create and switch between requirement collections stored locally in the browser.
 - **Requirement list** – add, edit or delete requirements with status, description and comments.
-- **Filtering and search** – quickly locate requirements by text or by status.
+- **Filtering and search** – locate requirements by searching across all fields or filtering by status.
 - **Specification tree view** – navigate requirements grouped by specification section.
 - **Traceability matrix** – view each requirement across all statuses for quick verification.
 - **Dashboard** – pie chart coverage and readiness indicator based on verification status.
 - **CSV import/export** – move requirements in and out of the app using standard CSV files.
+- **Custom statuses** – define your own requirement statuses directly from the UI.
+- **Merge CSV import** – append imported requirements instead of replacing existing ones.
 
 ## Prerequisites
 

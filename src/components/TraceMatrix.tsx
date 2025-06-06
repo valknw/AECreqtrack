@@ -1,5 +1,4 @@
 import type { Requirement } from "../types";
-import { STATUSES } from "../types";
 import {
   Card,
   CardContent,
@@ -13,9 +12,10 @@ interface Props {
   requirements: Requirement[];
   onDelete: (id: string) => void;
   logoColor: string;
+  statuses: string[];
 }
 
-export function TraceMatrix({ requirements, onDelete, logoColor }: Props) {
+export function TraceMatrix({ requirements, onDelete, logoColor, statuses }: Props) {
   return (
     <Card className="overflow-x-auto">
       <CardHeader>
@@ -28,7 +28,7 @@ export function TraceMatrix({ requirements, onDelete, logoColor }: Props) {
           <thead className="bg-gray-100 text-left font-medium">
             <tr>
               <th className="px-4 py-2 text-logo">Req ID</th>
-              {STATUSES.map((s) => (
+              {statuses.map((s) => (
                 <th key={s} className="px-4 py-2 capitalize text-logo">
                   {s}
                 </th>
@@ -42,7 +42,7 @@ export function TraceMatrix({ requirements, onDelete, logoColor }: Props) {
                 <td className="px-4 py-2 font-mono text-xs text-logo">
                   {r.req_id}
                 </td>
-                {STATUSES.map((s) => (
+                {statuses.map((s) => (
                   <td key={s} className="px-4 py-2 text-center text-logo">
                     {r.status === s ? "✔️" : ""}
                   </td>

@@ -1,17 +1,11 @@
-export enum Status {
-  Draft = "draft",
-  Approved = "approved",
-  Implemented = "implemented",
-  Verified = "verified",
-  Closed = "closed",
-}
+export type Status = string;
 
-export const STATUSES = [
-  Status.Draft,
-  Status.Approved,
-  Status.Implemented,
-  Status.Verified,
-  Status.Closed,
+export const DEFAULT_STATUSES = [
+  "draft",
+  "approved",
+  "implemented",
+  "verified",
+  "closed",
 ] as const;
 
 export interface Requirement {
