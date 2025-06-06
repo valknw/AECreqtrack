@@ -61,14 +61,14 @@ inside a fresh Vite project.
    ```bash
    node tests/csv.test.js
    ```
-7. **Create a React project** named `aecreqtrack` where the app will run. From the terminal:
+7. **Create a React project** in a new folder (this guide uses `demo`). Run:
    ```bash
-   npm create vite@latest aecreqtrack -- --template react-ts
-   cd aecreqtrack
+   npm create vite@latest demo -- --template react-ts
+   cd demo
    npm install
    ```
-8. **Copy `App.tsx` and the `src/` directory** from this repository into
-   `aecreqtrack/src/` (replace the generated files).
+8. **Copy `App.tsx` and the `src/` directory** from the repository root into
+   `demo/src/`, replacing the files created by Vite.
 9. **Start the development server**:
    ```bash
    npm run dev
