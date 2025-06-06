@@ -1,0 +1,16 @@
+{
+  "name": "aecreqtrack",
+  "version": "1.0.0",
+  "description": "Lightweight requirements tracker implemented with React and TypeScript.",
+  "scripts": {
+    "build": "tsc",
+    "test": "npm run build && node tests/csv.test.js"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "lucide-react": "^0.355.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
