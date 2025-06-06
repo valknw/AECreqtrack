@@ -40,6 +40,15 @@ declare module 'recharts' {
   export const ResponsiveContainer: any;
 }
 
+declare module 'lucide-react' {
+  export const Plus: any;
+  export const Save: any;
+  export const Search: any;
+  export const Upload: any;
+  export const Download: any;
+  export const Trash: any;
+}
+
 declare namespace JSX {
   interface IntrinsicElements {
     [elemName: string]: any;
