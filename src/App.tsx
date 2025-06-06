@@ -10,13 +10,7 @@ import {
   DialogTrigger,
 } from "./components/ui/dialog";
 import { Input } from "./components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./components/ui/select";
+import { Select, SelectItem } from "./components/ui/select";
 import { Plus, Save, Search, Upload, Download } from "lucide-react";
 import type { Requirement } from "./types";
 import { STATUSES, Status } from "./types";
@@ -46,7 +40,7 @@ export default function App() {
   } = useRequirements(SAMPLE_REQUIREMENTS, currentProject);
 
   const [search, setSearch] = useState("");
-  const [filterStatus, setFilterStatus] = useState<string | undefined>();
+  const [filterStatus, setFilterStatus] = useState<string | undefined>(undefined);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newReq, setNewReq] = useState({ title: "", description: "", spec_section: "" });
   const [view, setView] = useState<"list" | "tree" | "matrix" | "dashboard">("list");
@@ -86,17 +80,16 @@ export default function App() {
             Requirement Tracker
           </h1>
           <div className="flex items-center gap-4">
-            <Select value={currentProject} onValueChange={switchProject}>
-              <SelectTrigger className="w-40 border-logo">
-                <SelectValue placeholder="Select project" className="text-logo" />
-              </SelectTrigger>
-              <SelectContent>
-                {projects.map((p) => (
-                  <SelectItem key={p} value={p} className="text-logo">
-                    {p}
-                  </SelectItem>
-                ))}
-              </SelectContent>
+            <Select
+              value={currentProject}
+              onValueChange={switchProject}
+              className="w-40 border-logo text-logo"
+            >
+              {projects.map((p) => (
+                <SelectItem key={p} value={p} className="text-logo">
+                  {p}
+                </SelectItem>
+              ))}
             </Select>
             <Button
               size="sm"
@@ -146,7 +139,12 @@ export default function App() {
                   <span className="text-logo">Title *</span>
                   <Input
                     value={newReq.title}
-                    onChange={(e) => setNewReq((p) => ({ ...p, title: e.target.value }))}
+                    onChange={(e) =>
+                      setNewReq({
+                        ...newReq,
+                        title: e.target.value,
+                      })
+                    }
                     className="border-logo focus:ring-logo"
                   />
                 </label>
@@ -154,7 +152,12 @@ export default function App() {
                   <span className="text-logo">Description *</span>
                   <Input
                     value={newReq.description}
-                    onChange={(e) => setNewReq((p) => ({ ...p, description: e.target.value }))}
+                    onChange={(e) =>
+                      setNewReq({
+                        ...newReq,
+                        description: e.target.value,
+                      })
+                    }
                     className="border-logo focus:ring-logo"
                   />
                 </label>
@@ -162,7 +165,12 @@ export default function App() {
                   <span className="text-logo">Specification Section</span>
                   <Input
                     value={newReq.spec_section}
-                    onChange={(e) => setNewReq((p) => ({ ...p, spec_section: e.target.value }))}
+                    onChange={(e) =>
+                      setNewReq({
+                        ...newReq,
+                        spec_section: e.target.value,
+                      })
+                    }
                     className="border-logo focus:ring-logo"
                   />
                 </label>
@@ -194,20 +202,19 @@ export default function App() {
             />
           </div>
 
-          <Select value={selectValue} onValueChange={(v) => setFilterStatus(v === ALL_VALUE ? undefined : v)}>
-            <SelectTrigger className="w-40 border-logo">
-              <SelectValue placeholder="All statuses" className="text-logo" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={ALL_VALUE} className="capitalize text-logo">
-                All
+          <Select
+            value={selectValue}
+            onValueChange={(v) => setFilterStatus(v == ALL_VALUE ? undefined : v)}
+            className="w-40 border-logo text-logo capitalize"
+          >
+            <SelectItem value={ALL_VALUE} className="capitalize text-logo">
+              All
+            </SelectItem>
+            {STATUSES.map((s) => (
+              <SelectItem key={s} value={s} className="capitalize text-logo">
+                {s}
               </SelectItem>
-              {STATUSES.map((s) => (
-                <SelectItem key={s} value={s} className="capitalize text-logo">
-                  {s}
-                </SelectItem>
-              ))}
-            </SelectContent>
+            ))}
           </Select>
 
           <Button type="button" onClick={exportCSVFile} variant="outline" size="sm" className="border-logo text-logo">

@@ -40,6 +40,7 @@ declare module 'recharts' {
   export const ResponsiveContainer: any;
 }
 
+
 declare namespace JSX {
   interface IntrinsicElements {
     [elemName: string]: any;

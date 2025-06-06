@@ -26,9 +26,11 @@ interface DialogProps {
 export function Dialog({ open, onOpenChange, children, ...props }: DialogProps) {
   return (
     <DialogContext.Provider value={{ open, setOpen: onOpenChange || (() => {}) }}>
+
       <div {...props} style={{ display: open ? "block" : "none" }}>
         {children}
       </div>
+
     </DialogContext.Provider>
   );
 }
