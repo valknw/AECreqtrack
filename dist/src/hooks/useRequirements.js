@@ -4,13 +4,14 @@ exports.useRequirements = useRequirements;
 const react_1 = require("react");
 const types_1 = require("../types");
 const csv_1 = require("../utils/csv");
-const STORAGE_KEY = "requirements";
-function useRequirements(initial) {
+const KEY_PREFIX = "requirements_";
+function useRequirements(initial, project) {
+    const storageKey = `${KEY_PREFIX}${project}`;
     const [requirements, setRequirements] = (0, react_1.useState)(() => {
         if (typeof window === "undefined")
             return initial;
         try {
-            const stored = localStorage.getItem(STORAGE_KEY);
+            const stored = localStorage.getItem(storageKey);
             if (stored) {
                 return JSON.parse(stored);
             }
@@ -20,11 +21,28 @@ function useRequirements(initial) {
         }
         return initial;
     });
+    // reload when project changes
+    (0, react_1.useEffect)(() => {
+        if (typeof window === "undefined")
+            return;
+        try {
+            const stored = localStorage.getItem(storageKey);
+            if (stored) {
+                setRequirements(JSON.parse(stored));
+            }
+            else {
+                setRequirements(initial);
+            }
+        }
+        catch (_a) {
+            setRequirements(initial);
+        }
+    }, [storageKey]);
     (0, react_1.useEffect)(() => {
         if (typeof window !== "undefined") {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(requirements));
+            localStorage.setItem(storageKey, JSON.stringify(requirements));
         }
-    }, [requirements]);
+    }, [requirements, storageKey]);
     const createRequirement = (0, react_1.useCallback)((data) => {
         const newItem = {
             req_id: `REQ-${(requirements.length + 1)
