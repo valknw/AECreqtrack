@@ -30,9 +30,9 @@ AECreqtrack is a lightweight requirements tracker implemented with **React** and
 
 ## Getting started in Visual Studio Code
 
-AECreqtrack ships with reusable React components but no bundler
-configuration. The steps below show how to open the repository and run the demo
-inside a fresh Vite project.
+AECreqtrack ships with reusable React components and a Vite configuration so
+you can run the application directly from this repository. The steps below show
+how to open the project in VS Code and start the development server.
 
 1. **Install prerequisites**
    - [Node.js](https://nodejs.org/) 18 or newer
@@ -62,29 +62,12 @@ inside a fresh Vite project.
    node tests/csv.test.js
    ```
 
-7. **Create a React project** in a new folder (this guide uses `demo`). Run:
+7. **Start the development server** directly from the repository root:
    ```bash
-   npm create vite@latest demo -- --template react-ts
-   cd demo
-   npm install
-   ```
-
-8. **Return to the repository root and run the setup script** to copy the
-   application files, install the extra dependencies and configure Tailwind CSS:
-
-
-   ```bash
-   cd ..
-   node setupDemo.js demo
-   ```
-
-9. **Start the development server** inside `demo`:
-   ```bash
-   cd demo
    npm run dev
    ```
-11. Open the URL printed in the terminal (typically
-    `http://localhost:5173`) in your browser to use AECreqtrack.
+8. Open the URL printed in the terminal (typically
+   `http://localhost:5173`) in your browser to use AECreqtrack.
 
 Once running, you can:
 
