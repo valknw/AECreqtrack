@@ -15,4 +15,5 @@ export interface Requirement {
   spec_section: string;
   status: Status;
   comment: string;
+  verification: string;
 }

@@ -5,7 +5,7 @@ import { parseCSV, requirementsToCSV } from "../utils/csv";
 
 const KEY_PREFIX = "requirements_";
 
-type NewReq = Omit<Requirement, "req_id" | "status" | "comment">;
+type NewReq = Omit<Requirement, "req_id" | "status" | "comment" | "verification">;
 
 export function useRequirements(initial: Requirement[], project: string) {
   const storageKey = `${KEY_PREFIX}${project}`;
@@ -15,7 +15,8 @@ export function useRequirements(initial: Requirement[], project: string) {
     try {
       const stored = localStorage.getItem(storageKey);
       if (stored) {
-        return JSON.parse(stored) as Requirement[];
+        const parsed = JSON.parse(stored) as Requirement[];
+        return parsed.map((r) => ({ verification: "", ...r }));
       }
     } catch {
       // ignore corrupt data
@@ -29,7 +30,8 @@ export function useRequirements(initial: Requirement[], project: string) {
     try {
       const stored = localStorage.getItem(storageKey);
       if (stored) {
-        setRequirements(JSON.parse(stored) as Requirement[]);
+        const parsed = JSON.parse(stored) as Requirement[];
+        setRequirements(parsed.map((r) => ({ verification: "", ...r })));
       } else {
         setRequirements(initial);
       }
@@ -60,6 +62,7 @@ export function useRequirements(initial: Requirement[], project: string) {
         req_id: id,
         status: DEFAULT_STATUSES[0],
         comment: "",
+        verification: "",
         ...data,
       };
       setRequirements([...requirements, newItem]);

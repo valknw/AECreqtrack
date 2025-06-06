@@ -9,6 +9,7 @@ exports.SAMPLE_REQUIREMENTS = [
         spec_section: "1.1",
         status: "approved",
         comment: "Reviewed by QA",
+        verification: "Test plan needed",
     },
     {
         req_id: "REQ-002",
@@ -17,6 +18,7 @@ exports.SAMPLE_REQUIREMENTS = [
         spec_section: "1.2",
         status: "draft",
         comment: "Pending security review",
+        verification: "TBD",
     },
     {
         req_id: "REQ-003",
@@ -25,6 +27,7 @@ exports.SAMPLE_REQUIREMENTS = [
         spec_section: "2.1",
         status: "implemented",
         comment: "Logs available in /var/logs",
+        verification: "Manual log review",
     },
     {
         req_id: "REQ-004",
@@ -33,6 +36,7 @@ exports.SAMPLE_REQUIREMENTS = [
         spec_section: "1.1",
         status: "verified",
         comment: "Tested",
+        verification: "Unit tests",
     },
     {
         req_id: "REQ-005",
@@ -41,6 +45,7 @@ exports.SAMPLE_REQUIREMENTS = [
         spec_section: "1.1",
         status: "closed",
         comment: "Deployed",
+        verification: "Deployment check",
     },
 ];
 exports.SPEC_TREE = [

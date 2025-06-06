@@ -30,6 +30,7 @@ import { RequirementList } from "./components/RequirementList";
 import { SpecTree } from "./components/SpecTree";
 import { TraceMatrix } from "./components/TraceMatrix";
 import { Dashboard } from "./components/Dashboard";
+import { VerificationTab } from "./components/VerificationTab";
 import "./styles.css";
 
 const LOGO_BLUE = "#0097D5";
@@ -53,7 +54,13 @@ export default function App() {
   const [filterStatus, setFilterStatus] = useState<string | undefined>(undefined);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [newReq, setNewReq] = useState({ title: "", description: "", spec_section: "" });
-  const [view, setView] = useState<"list" | "tree" | "matrix" | "dashboard">("list");
+  const [view, setView] = useState<
+    | "list"
+    | "tree"
+    | "matrix"
+    | "dashboard"
+    | "verification"
+  >("list");
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null);
@@ -149,7 +156,9 @@ export default function App() {
             </Button>
           </div>
           <div className="space-x-2 flex items-center">
-            {(["list", "tree", "matrix", "dashboard"] as const).map((v) => (
+            {(
+              ["list", "tree", "matrix", "dashboard", "verification"] as const
+            ).map((v) => (
               <Button
                 key={v}
                 variant={view === v ? "default" : "outline"}
@@ -369,6 +378,14 @@ export default function App() {
             coveragePercent={coveragePercent}
             isReady={isReady}
             statuses={statuses}
+          />
+        )}
+
+        {view === "verification" && (
+          <VerificationTab
+            requirements={requirements}
+            onUpdate={updateRequirement}
+            logoColor={LOGO_BLUE}
           />
         )}
       </div>
