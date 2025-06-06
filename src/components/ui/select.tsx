@@ -1,37 +1,26 @@
-import { ReactNode, createContext, useContext } from "react";
-
-interface SelectContextValue {
-  value?: string;
-  onValueChange?: (v: string) => void;
-}
-
-const SelectContext = createContext<SelectContextValue>({});
+import { ReactNode } from "react";
 
 interface SelectProps {
   value?: string;
   onValueChange?: (value: string) => void;
   children: ReactNode;
+  [key: string]: any;
 }
 
-export function Select({ value, onValueChange, children }: SelectProps) {
-  return (
-    <SelectContext.Provider value={{ value, onValueChange }}>
-      {children}
-    </SelectContext.Provider>
-  );
-}
-
-export function SelectTrigger(props: any) {
-  const ctx = useContext<SelectContextValue>(SelectContext as any);
+export function Select({ value, onValueChange, children, ...props }: SelectProps) {
   return (
     <select
       {...props}
-      value={ctx.value}
-      onChange={(e) => ctx.onValueChange?.(e.target.value)}
+      value={value}
+      onChange={(e) => onValueChange?.(e.target.value)}
     >
-      {props.children}
+      {children}
     </select>
   );
+}
+
+export function SelectTrigger({ children }: { children: ReactNode }) {
+  return <>{children}</>;
 }
 
 export function SelectContent({ children }: { children: ReactNode }) {
@@ -42,9 +31,6 @@ export function SelectItem(props: any & { value: string }) {
   return <option {...props}>{props.children}</option>;
 }
 
-export function SelectValue(_props: {
-  placeholder?: string;
-  className?: string;
-}) {
+export function SelectValue(_props: { placeholder?: string; className?: string }) {
   return null;
 }

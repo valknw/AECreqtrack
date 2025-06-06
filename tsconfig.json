@@ -9,5 +9,5 @@
     "noEmitOnError": false,
     "jsx": "react-jsx"
   },
-  "include": ["src/**/*", "App.tsx"]
+  "include": ["src/**/*"]
 }
