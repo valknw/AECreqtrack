@@ -68,11 +68,17 @@ inside a fresh Vite project.
    cd demo
    npm install
    ```
-8. **Copy `App.tsx` and the `src/` directory** from the repository root into
-   `demo/src/`, replacing the files created by Vite.
+8. **Return to the repository root and run the setup script** to copy the
+   application files and install the additional dependencies:
 
-9. **Start the development server**:
    ```bash
+   cd ..
+   node setupDemo.js demo
+   ```
+
+9. **Start the development server** inside `demo`:
+   ```bash
+   cd demo
    npm run dev
    ```
 10. Open the URL printed in the terminal (typically

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { Requirement, Status } from "../types";
+import type { Requirement } from "../types";
+import { Status } from "../types";
 import { parseCSV, requirementsToCSV } from "../utils/csv";
 
 const KEY_PREFIX = "requirements_";

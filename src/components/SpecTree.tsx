@@ -1,4 +1,4 @@
-import { Requirement } from "../types";
+import type { Requirement } from "../types";
 import { SPEC_TREE } from "../sampleData";
 import { Button } from "./ui/button";
 import { Trash } from "lucide-react";
