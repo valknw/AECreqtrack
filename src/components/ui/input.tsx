@@ -1,6 +1,6 @@
-import { InputHTMLAttributes } from "react";
-
-export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {}
+export interface InputProps {
+  [key: string]: any;
+}
 
 export function Input(props: InputProps) {
   return <input {...props} />;
