@@ -71,15 +71,17 @@ inside a fresh Vite project.
 8. **Run the provided setup script** from the repository root to copy the
    application files and install the additional dependencies automatically:
 
+
    ```bash
    node setupDemo.js demo
    ```
 
 9. **Start the development server** (still inside the `demo` folder):
+
    ```bash
    npm run dev
    ```
-10. Open the URL printed in the terminal (typically
+11. Open the URL printed in the terminal (typically
     `http://localhost:5173`) in your browser to use AECreqtrack.
 
 Once running, you can:
