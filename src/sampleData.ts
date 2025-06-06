@@ -1,4 +1,5 @@
-import { Requirement, Status } from "./types";
+import type { Requirement } from "./types";
+import { Status } from "./types";
 
 export const SAMPLE_REQUIREMENTS: Requirement[] = [
   {
