@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import type { Requirement } from "../types";
 
 import {
@@ -12,12 +13,26 @@ const COLORS = ["#0097D5", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
 
 interface Props {
   requirements: Requirement[];
-  coveragePercent: number;
-  isReady: boolean;
   statuses: string[];
 }
 
-export function Dashboard({ requirements, coveragePercent, isReady, statuses }: Props) {
+export function Dashboard({ requirements, statuses }: Props) {
+  const finalStatuses = useMemo(() => {
+    // treat the last two statuses as "complete" states
+    return statuses.slice(-2);
+  }, [statuses]);
+
+  const coveragePercent = useMemo(() => {
+    if (requirements.length === 0) return 0;
+    const done = requirements.filter((r) => finalStatuses.includes(r.status)).length;
+    return Math.round((done / requirements.length) * 100);
+  }, [requirements, finalStatuses]);
+
+  const isReady = useMemo(
+    () => requirements.every((r) => finalStatuses.includes(r.status)),
+    [requirements, finalStatuses]
+  );
+
   const pieData = statuses.map((s) => ({
     name: s,
     value: requirements.filter((r) => r.status === s).length,
@@ -49,7 +64,7 @@ export function Dashboard({ requirements, coveragePercent, isReady, statuses }: 
             </ResponsiveContainer>
           </div>
           <div className="mt-2 text-lg font-semibold text-logo">
-            {coveragePercent}% Verified
+            {coveragePercent}% Complete
           </div>
         </CardContent>
       </Card>
@@ -59,9 +74,7 @@ export function Dashboard({ requirements, coveragePercent, isReady, statuses }: 
         </CardHeader>
         <CardContent>
           {isReady ? (
-            <div className="text-logo font-semibold text-xl">
-              All items Verified/Closed
-            </div>
+            <div className="text-logo font-semibold text-xl">All items Complete</div>
           ) : (
             <div className="text-logo font-semibold text-xl">Not Ready</div>
           )}
